@@ -24,6 +24,11 @@ class SavingsAccountYear(object):
     def total_withdrawals(self):
         return self._total_withdrawn
 
+    @property
+    def capital_gains_withdrawn(self):
+        result = -1 * (self.starting_principal - self.total_withdrawals)
+        return max(0, result)
+
     def next_year(self):
         result = SavingsAccountYear(self.ending_balance, interest_rate=self.interest_rate)
         return result
