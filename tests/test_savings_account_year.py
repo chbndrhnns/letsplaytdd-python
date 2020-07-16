@@ -5,11 +5,11 @@ from finances.savings_account_year import SavingsAccountYear
 
 @pytest.fixture
 def create_account() -> SavingsAccountYear:
-    def factory(*, start: int = 10000, interest_rate=10, capital_gains=7000):
+    def factory(*, start: int = 10000, interest_rate=10, starting_principal=3000):
         return SavingsAccountYear(
             start,
             interest_rate=interest_rate,
-            capital_gains=capital_gains
+            starting_principal=starting_principal
         )
 
     return factory

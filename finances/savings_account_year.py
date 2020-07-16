@@ -1,9 +1,10 @@
 class SavingsAccountYear(object):
 
-    def __init__(self, starting_balance: int = 0, *, interest_rate: int = 0, capital_gains: int = 0):
+    def __init__(self, starting_balance: int = 0, *, interest_rate: int = 0, starting_principal: int = 0):
         self.starting_balance = starting_balance
         self.interest_rate = interest_rate
-        self._capital_gains_amount = capital_gains
+        self._starting_principal = starting_principal
+        self._capital_gains_amount = starting_balance - starting_principal
         self._total_withdrawn = 0
 
     @property
