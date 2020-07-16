@@ -51,7 +51,6 @@ class TestProjections:
         assert year.starting_principal == 3000
 
     def test_ending_principal(self, year):
-        assert year.starting_principal == 3000
         year.withdraw(2000)
         assert year.ending_principal == 1000
 
@@ -60,15 +59,21 @@ class TestProjections:
         assert year.ending_principal == 0
 
     def test_capital_gains_withdrawn(self, year):
-        assert year.starting_principal == 3000
         year.withdraw(1000)
         assert year.capital_gains_withdrawn == 0
         year.withdraw(3000)
         assert year.capital_gains_withdrawn == 1000
 
-    # @pytest.mark.skip
-    # def test_withdrawing_more_than_principal_incurs_capital_gains_tax(self, year):
-    #     year.withdraw(3000)
-    #     assert year.ending_balance == 7700
-    #     year.withdraw(5000)
-    #     assert year.ending_balance == 2000 + 200 - (5000 * 0.25)
+    def test_capital_gains_tax_incurred__needs_to_cover_capital_gains_withdrawn_AND_additional_capital_gains_withdrawn_to_pay_tax(
+            self, year):
+        year.withdraw(5000)
+        assert year.capital_gains_withdrawn == 2000
+        assert year.capital_gains_tax_incurred() == 666
+
+    def test_capital_gains_tax_is_included_in_ending_balance(self, year):
+        expected_capital_gains_tax = 666
+        amount_withdrawn = 5000
+        expected_starting_balance_after_withdrawals = 10000 - amount_withdrawn - expected_capital_gains_tax
+        year.withdraw(amount_withdrawn)
+        assert year.capital_gains_withdrawn == 2000
+        assert year.ending_balance == int(expected_starting_balance_after_withdrawals * 1.1)

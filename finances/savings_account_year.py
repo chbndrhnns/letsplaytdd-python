@@ -1,11 +1,19 @@
 class SavingsAccountYear(object):
 
-    def __init__(self, starting_balance: int = 0, *, interest_rate: int = 0, starting_principal: int = 0):
+    def __init__(
+            self,
+            starting_balance: int = 0,
+            *,
+            interest_rate: int = 0,
+            starting_principal: int = 0,
+            capital_gains_tax_rate: int = 25
+    ):
         self.starting_balance = starting_balance
         self.interest_rate = interest_rate
         self._starting_principal = starting_principal
         self._capital_gains_amount = starting_balance - starting_principal
         self._total_withdrawn = 0
+        self.capital_gains_tax_rate = capital_gains_tax_rate
 
     @property
     def starting_principal(self):
@@ -13,7 +21,7 @@ class SavingsAccountYear(object):
 
     @property
     def ending_balance(self):
-        modified_start = self.starting_balance - self.total_withdrawals
+        modified_start = self.starting_balance - self.total_withdrawals - self.capital_gains_tax_incurred()
         return int(modified_start + (modified_start * self.interest_rate) / 100)
 
     @property
@@ -36,3 +44,6 @@ class SavingsAccountYear(object):
 
     def withdraw(self, amount):
         self._total_withdrawn += amount
+
+    def capital_gains_tax_incurred(self):
+        return int(self.capital_gains_withdrawn / (100 - self.capital_gains_tax_rate) * self.capital_gains_tax_rate)
