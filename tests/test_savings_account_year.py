@@ -1,26 +1,16 @@
 from finances.savings_account_year import SavingsAccountYear
 
 
-class TestBasics:
-    def test_deposit(self):
-        account = SavingsAccountYear()
-        account.deposit(100)
-        assert account.balance == 100
-
-    def test_withdraw(self):
-        account = SavingsAccountYear()
-        account.deposit(100)
-        account.withdraw(50)
-        assert account.balance == 50
-
-    def test_negative_balance_is_fine(self):
-        account = SavingsAccountYear()
-        account.withdraw(75)
-        assert account.balance == -75
-
-
 class TestProjections:
-    def test_next_year(self):
-        account = SavingsAccountYear(10000)
-        next_year_account = account.next_year(10)
-        assert next_year_account.balance == 11000
+    def test_starting_balance(self):
+        account = SavingsAccountYear(10000, interest_rate=10)
+        assert 10000, account.starting_balance
+
+    def test_ending_balance(self):
+        account = SavingsAccountYear(10000, interest_rate=10)
+        assert account.ending_balance == 11000
+
+    def test_next_years_starting_balance_equals_this_years_ending_balance(self):
+        this_year = SavingsAccountYear(10000)
+        next_year_account = this_year.next_year()
+        assert next_year_account.starting_balance == this_year.ending_balance
