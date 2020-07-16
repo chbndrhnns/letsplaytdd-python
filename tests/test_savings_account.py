@@ -12,3 +12,9 @@ def test_withdraw():
     account.deposit(100)
     account.withdraw(50)
     assert account.balance == 50
+
+
+def test_negative_balance_is_fine():
+    account = SavingsAccount()
+    account.withdraw(75)
+    assert account.balance == -75
