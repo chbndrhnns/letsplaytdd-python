@@ -12,3 +12,9 @@ class SavingsAccount(object):
 
     def withdraw(self, amount: int):
         self._balance -= amount
+
+    def next_year(self, interest_rate: int):
+        result = SavingsAccount()
+        factor = ((100 + interest_rate) / 100)
+        result.deposit(int(self.balance * factor))
+        return result

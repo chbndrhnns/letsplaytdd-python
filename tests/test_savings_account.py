@@ -22,3 +22,5 @@ class TestBasics:
 class TestProjections:
     def test_next_year(self):
         account = SavingsAccount(10000)
+        next_year_account = account.next_year(10)
+        assert next_year_account.balance == 11000
