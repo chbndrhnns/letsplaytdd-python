@@ -11,7 +11,7 @@ class TestProjections:
     def test_starting_balance(self, account):
         assert 10000, account.starting_balance
 
-    def test_ending_balance(self, account):
+    def test_ending_balance_applies_interest_rate(self, account):
         assert account.ending_balance == 11000
 
     def test_next_years_starting_balance_equals_this_years_ending_balance(self, account):
@@ -22,5 +22,5 @@ class TestProjections:
         next_year = account.next_year()
         assert next_year.interest_rate == account.interest_rate
 
-    def test_interest_rate(self, account):
+    def test_interest_rate_matches_constructor(self, account):
         assert account.interest_rate == 10
