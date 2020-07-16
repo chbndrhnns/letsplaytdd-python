@@ -9,6 +9,7 @@ pytest-mock = "*"
 pytest-watch = "*"
 
 [packages]
+typer = {extras = ["all"], version = "*"}
 
 [requires]
 python_version = "3.8"
