@@ -1,4 +1,4 @@
-from money.savings_account import SavingsAccount
+from finances.savings_account import SavingsAccount
 
 
 def test_deposit():
