@@ -12,6 +12,10 @@ class SavingsAccountYear(object):
     def ending_balance(self):
         return int(self._balance * ((100 + self._interest_rate) / 100))
 
+    @property
+    def interest_rate(self):
+        return self._interest_rate
+
     def withdraw(self, amount: int):
         self._balance -= amount
 
