@@ -10,8 +10,18 @@ class SavingsAccount(object):
     def deposit(self, amount: int):
         self._balance += amount
 
+    def withdraw(self, amount: int):
+        self._balance -= amount
 
-def test_nothing():
+
+def test_deposit():
     account = SavingsAccount()
     account.deposit(100)
     assert account.balance == 100
+
+
+def test_withdraw():
+    account = SavingsAccount()
+    account.deposit(100)
+    account.withdraw(50)
+    assert account.balance == 50
