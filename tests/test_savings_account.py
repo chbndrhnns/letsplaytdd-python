@@ -17,3 +17,8 @@ class TestBasics:
         account = SavingsAccount()
         account.withdraw(75)
         assert account.balance == -75
+
+
+class TestProjections:
+    def test_next_year(self):
+        account = SavingsAccount(10000)

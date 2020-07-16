@@ -1,7 +1,7 @@
 class SavingsAccount(object):
 
-    def __init__(self):
-        self._balance = 0
+    def __init__(self, initial_balance: int = 0):
+        self._balance = initial_balance
 
     @property
     def balance(self):
