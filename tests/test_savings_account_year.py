@@ -18,7 +18,7 @@ def create_account() -> SavingsAccountYear:
 class TestProjections:
 
     @pytest.fixture
-    def account(self, create_account):
+    def account(self, create_account) -> SavingsAccountYear:
         return create_account()
 
     def test_starting_balance(self, account):
@@ -42,10 +42,10 @@ class TestProjections:
         account.withdraw(1000)
         assert account.ending_balance == 9900
 
-    def test_two_withdrawals_in_a_year(self, account):
+    def test_multiple_withdrawals_in_a_year(self, account):
         account.withdraw(1000)
         account.withdraw(3000)
-        assert account.ending_balance == 6600
+        assert account.total_withdrawals == 4000
 
     def test_starting_principal(self, account):
         assert account.starting_principal == 3000
