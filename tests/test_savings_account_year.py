@@ -19,3 +19,7 @@ class TestProjections:
         this_year = SavingsAccountYear(10000)
         next_year = this_year.next_year()
         assert next_year.interest_rate == this_year.interest_rate
+
+    def test_interest_rate(self):
+        account = SavingsAccountYear(10000, interest_rate=10)
+        assert account.interest_rate == 10
