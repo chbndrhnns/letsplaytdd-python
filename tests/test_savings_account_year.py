@@ -3,10 +3,23 @@ import pytest
 from finances.savings_account_year import SavingsAccountYear
 
 
+@pytest.fixture
+def create_account() -> SavingsAccountYear:
+    def factory(*, start: int = 10000, interest_rate=10, capital_gains=7000):
+        return SavingsAccountYear(
+            start,
+            interest_rate=interest_rate,
+            capital_gains=capital_gains
+        )
+
+    return factory
+
+
 class TestProjections:
+
     @pytest.fixture
-    def account(self) -> SavingsAccountYear:
-        return SavingsAccountYear(10000, interest_rate=10, capital_gains=7000)
+    def account(self, create_account):
+        return create_account()
 
     def test_starting_balance(self, account):
         assert 10000, account.starting_balance
