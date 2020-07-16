@@ -29,6 +29,11 @@ class TestProjections:
         account.withdraw(1000)
         assert account.ending_balance == 9900
 
+    def test_two_withdrawals_in_a_year(self, account):
+        account.withdraw(1000)
+        account.withdraw(3000)
+        assert account.ending_balance == 6600
+
     def test_starting_principal(self, account):
         assert account.starting_principal == 3000
 
@@ -42,12 +47,8 @@ class TestProjections:
         assert account.ending_principal == 0
 
     @pytest.mark.skip
-    def test_withdrawing_more_than_principal_incurs_capital_gains_tax(self):
-        account = SavingsAccountYear(10000, interest_rate=10, capital_gains=7000)
+    def test_withdrawing_more_than_principal_incurs_capital_gains_tax(self, account):
         account.withdraw(3000)
         assert account.ending_balance == 7700
         account.withdraw(5000)
         assert account.ending_balance == 2000 + 200 - (5000 * 0.25)
-
-    @pytest.mark.skip(reason='Todo')
-    def test_multiple_withdrawals_in_a_year(self): ...

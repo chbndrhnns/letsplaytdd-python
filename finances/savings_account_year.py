@@ -25,4 +25,4 @@ class SavingsAccountYear(object):
         return result
 
     def withdraw(self, amount):
-        self.total_withdrawn = amount
+        self.total_withdrawn += amount
