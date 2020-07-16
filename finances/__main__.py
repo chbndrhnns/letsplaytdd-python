@@ -1,10 +1,10 @@
 import typer
 
-from finances.savings_account import SavingsAccount
+from finances.savings_account_year import SavingsAccountYear
 
 
 def main():
-    account = SavingsAccount(10000)
+    account = SavingsAccountYear(10000)
 
     for year in range(60):
         typer.echo(f'Year {year}: {account.balance}')

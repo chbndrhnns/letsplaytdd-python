@@ -1,4 +1,4 @@
-class SavingsAccount(object):
+class SavingsAccountYear(object):
 
     def __init__(self, initial_balance: int = 0):
         self._balance = initial_balance
@@ -14,7 +14,7 @@ class SavingsAccount(object):
         self._balance -= amount
 
     def next_year(self, interest_rate: int):
-        result = SavingsAccount()
+        result = SavingsAccountYear()
         factor = ((100 + interest_rate) / 100)
         result.deposit(int(self.balance * factor))
         return result
