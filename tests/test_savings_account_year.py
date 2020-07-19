@@ -75,6 +75,10 @@ class TestProjections:
         assert year.capital_gains_withdrawn == 2000
         assert year.capital_gains_tax_incurred() == 666
 
+    def test_ending_capital_gains_includes_interest_earned(self, year):
+        assert year.starting_capital_gains == 7000
+        assert year.ending_capital_gains == 4000
+
     def test_capital_gains_tax_is_included_in_ending_balance(self, year, interest_rate):
         ending_balance_multiplier = (1 + interest_rate) / interest_rate
 

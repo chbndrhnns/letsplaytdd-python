@@ -25,6 +25,10 @@ class SavingsAccountYear(object):
         return self._capital_gains_amount
 
     @property
+    def ending_capital_gains(self):
+        return self._capital_gains_amount
+
+    @property
     def ending_balance(self):
         modified_start = self.starting_balance - self.total_withdrawals - self.capital_gains_tax_incurred()
         return int(modified_start + (modified_start * self.interest_rate) / 100)
