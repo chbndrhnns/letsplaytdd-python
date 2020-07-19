@@ -10,14 +10,19 @@ class SavingsAccountYear(object):
     ):
         self.starting_balance = starting_balance
         self.interest_rate = interest_rate
+        self.capital_gains_tax_rate = capital_gains_tax_rate
+
         self._starting_principal = starting_principal
         self._capital_gains_amount = starting_balance - starting_principal
         self._total_withdrawn = 0
-        self.capital_gains_tax_rate = capital_gains_tax_rate
 
     @property
     def starting_principal(self):
-        return self.starting_balance - self._capital_gains_amount
+        return self._starting_principal
+
+    @property
+    def starting_capital_gains(self):
+        return self._capital_gains_amount
 
     @property
     def ending_balance(self):
