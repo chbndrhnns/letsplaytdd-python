@@ -44,32 +44,19 @@ class TestStockMarketYear:
         assert next_year.interest_rate == year.interest_rate
         assert next_year.starting_principal == year.ending_principal
 
-    def test_withdrawn_funds_do_not_earn_interest(self, year):
+    def test_ending_principal(self, year):
         year.withdraw(1000)
-        assert year.ending_balance == 9900
-
-    def test_multiple_withdrawals_in_a_year_are_totalled(self, year):
-        year.withdraw(1000)
-        year.withdraw(3000)
-        assert year.total_withdrawals == 4000
-
-    def test_ending_principal_considers_withdrawals(self, year):
+        assert year.ending_principal == 2000, 'considers withdrawals'
         year.withdraw(2000)
-        assert year.ending_principal == 1000
-
-    def test_ending_principal_never_goes_below_0(self, year):
+        assert year.ending_principal == 0, 'considers totals of multiple withdrawals'
         year.withdraw(4000)
-        assert year.ending_principal == 0
+        assert year.ending_principal == 0, 'never goes below zero'
 
     def test_withdrawing_more_than_principal_takes_from_capital_gains(self, year):
         year.withdraw(1000)
         assert year.capital_gains_withdrawn == 0
         year.withdraw(3000)
         assert year.capital_gains_withdrawn == 1000
-
-    def test_withdrawn_funds_do_not_earn_interest(self, year):
-        year.withdraw(1000)
-        assert year.interest_earned == 900
 
     def test_capital_gains_taxes_do_not_earn_interest(self, interest_rate):
         year = account_factory(
@@ -95,10 +82,9 @@ class TestStockMarketYear:
         assert year.capital_gains_tax_incurred == 666
 
     def test_interest_earned_is_starting_balance_times_interest_rate(self, year, interest_rate):
-        assert year.interest_earned == 1000
-
-    def test_interest_earned_is_starting_balance_combined_with_interest_rate(self, year):
-        assert year.interest_earned == 1000
+        assert year.interest_earned == 1000, 'basic interest earned'
+        year.withdraw(2000)
+        assert year.interest_earned == 800, 'withdrawals do not earn interest'
 
     def test_capital_gains_tax_is_included_in_ending_balance(self, year, interest_rate):
         ending_balance_multiplier = (1 + interest_rate) / interest_rate

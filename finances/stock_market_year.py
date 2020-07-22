@@ -21,10 +21,6 @@ class StockMarketYear(object):
         return self._starting_principal
 
     @property
-    def starting_capital_gains(self):
-        return self._capital_gains_amount
-
-    @property
     def ending_balance(self):
         modified_start = self.starting_balance - self.total_withdrawn
         return modified_start + self.interest_earned
