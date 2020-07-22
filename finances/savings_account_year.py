@@ -14,7 +14,7 @@ class SavingsAccountYear(object):
 
         self._starting_principal = starting_principal
         self._capital_gains_amount = starting_balance - starting_principal
-        self._total_withdrawn = 0
+        self.total_withdrawals = 0
 
     @property
     def starting_principal(self):
@@ -26,7 +26,7 @@ class SavingsAccountYear(object):
 
     @property
     def ending_balance(self):
-        modified_start = self.starting_balance - self.total_withdrawn_except_capital_gains_tax - self.capital_gains_tax_incurred()
+        modified_start = self.starting_balance - self.total_withdrawn
         return modified_start + self.interest_earned
 
     @property
@@ -35,34 +35,29 @@ class SavingsAccountYear(object):
 
     @property
     def ending_principal(self):
-        result = self.starting_principal - self.total_withdrawn_except_capital_gains_tax
+        result = self.starting_principal - self.total_withdrawals
         return max(0, result)
 
     @property
     def total_withdrawn(self):
-        return self._total_withdrawn + self.capital_gains_tax_incurred()
+        return self.total_withdrawals + self.capital_gains_tax_incurred
 
     @property
     def interest_earned(self):
-        return int((
-                           self.starting_balance - self.total_withdrawn_except_capital_gains_tax - self.capital_gains_tax_incurred()
-                   ) * self.interest_rate / 100)
-
-    @property
-    def total_withdrawn_except_capital_gains_tax(self):
-        return self._total_withdrawn
+        return int((self.starting_balance - self.total_withdrawn) * self.interest_rate / 100)
 
     @property
     def capital_gains_withdrawn(self):
-        result = -1 * (self.starting_principal - self.total_withdrawn_except_capital_gains_tax)
+        result = -1 * (self.starting_principal - self.total_withdrawals)
         return max(0, result)
+
+    @property
+    def capital_gains_tax_incurred(self):
+        return int(self.capital_gains_withdrawn / (100 - self.capital_gains_tax_rate) * self.capital_gains_tax_rate)
 
     def next_year(self):
         result = SavingsAccountYear(self.ending_balance, interest_rate=self.interest_rate)
         return result
 
     def withdraw(self, amount):
-        self._total_withdrawn += amount
-
-    def capital_gains_tax_incurred(self):
-        return int(self.capital_gains_withdrawn / (100 - self.capital_gains_tax_rate) * self.capital_gains_tax_rate)
+        self.total_withdrawals += amount

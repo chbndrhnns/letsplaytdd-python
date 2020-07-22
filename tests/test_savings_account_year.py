@@ -54,7 +54,7 @@ class TestProjections:
     def test_multiple_withdrawals_in_a_year_are_totalled(self, year):
         year.withdraw(1000)
         year.withdraw(3000)
-        assert year.total_withdrawn_except_capital_gains_tax == 4000
+        assert year.total_withdrawals == 4000
 
     def test_starting_principal(self, year):
         assert year.starting_principal == 3000
@@ -83,7 +83,7 @@ class TestProjections:
         )
         year.withdraw(1000)
         assert year.capital_gains_withdrawn == 1000
-        assert year.capital_gains_tax_incurred() == 333
+        assert year.capital_gains_tax_incurred == 333
         assert year.interest_earned == 866
 
     def test_total_withdrawn_including_capital_gains(self, year):
@@ -91,14 +91,14 @@ class TestProjections:
             start=10000, interest_rate=interest_rate, starting_principal=0
         )
         year.withdraw(1000)
-        assert year.capital_gains_tax_incurred() == 333
+        assert year.capital_gains_tax_incurred == 333
         assert year.total_withdrawn == 1333
 
     def test_capital_gains_tax_incurred__needs_to_cover_capital_gains_withdrawn_AND_additional_capital_gains_withdrawn_to_pay_tax(
             self, year):
         year.withdraw(5000)
         assert year.capital_gains_withdrawn == 2000
-        assert year.capital_gains_tax_incurred() == 666
+        assert year.capital_gains_tax_incurred == 666
 
     def test_interest_earned_is_starting_balance_times_interest_rate(self, year, interest_rate):
         assert year.interest_earned == 1000
