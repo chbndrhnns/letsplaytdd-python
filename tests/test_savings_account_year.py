@@ -44,12 +44,16 @@ class TestStockMarketYear:
         next_year = year.next_year()
         assert next_year.interest_rate == year.interest_rate
 
+    def test_next_years_starting_principal_equals_this_years_ending_principal(self, year):
+        next_year = year.next_year()
+        assert next_year.starting_principal == year.ending_principal
+
     def test_interest_rate_matches_constructor(self, year):
         assert year.interest_rate == 10
 
-    # def test_withdrawn_funds_do_not_earn_interest(self, year):
-    #     year.withdraw(1000)
-    #     assert year.ending_balance == 9900
+    def test_withdrawn_funds_do_not_earn_interest(self, year):
+        year.withdraw(1000)
+        assert year.ending_balance == 9900
 
     def test_multiple_withdrawals_in_a_year_are_totalled(self, year):
         year.withdraw(1000)
