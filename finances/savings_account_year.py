@@ -30,10 +30,6 @@ class SavingsAccountYear(object):
         return modified_start + self.interest_earned
 
     @property
-    def ending_capital_gains(self):
-        return self._capital_gains_amount + self.interest_earned - self.capital_gains_tax_incurred
-
-    @property
     def ending_principal(self):
         result = self.starting_principal - self.total_withdrawals
         return max(0, result)
