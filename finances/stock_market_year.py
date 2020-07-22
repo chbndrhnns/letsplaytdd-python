@@ -1,4 +1,4 @@
-class SavingsAccountYear(object):
+class StockMarketYear(object):
 
     def __init__(
             self,
@@ -52,7 +52,7 @@ class SavingsAccountYear(object):
         return int(self.capital_gains_withdrawn / (100 - self.capital_gains_tax_rate) * self.capital_gains_tax_rate)
 
     def next_year(self):
-        result = SavingsAccountYear(
+        result = StockMarketYear(
             self.ending_balance,
             interest_rate=self.interest_rate,
             starting_principal=self.ending_principal

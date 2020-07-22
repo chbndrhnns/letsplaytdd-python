@@ -3,11 +3,11 @@ from typing import Callable
 
 import pytest
 
-from finances.savings_account_year import SavingsAccountYear
+from finances.stock_market_year import StockMarketYear
 
 
 def account_factory(*, start: int = 10000, interest_rate=10, starting_principal=3000):
-    return SavingsAccountYear(
+    return StockMarketYear(
         start,
         interest_rate=interest_rate,
         starting_principal=starting_principal
@@ -20,14 +20,14 @@ def interest_rate():
 
 
 @pytest.fixture
-def default_account(interest_rate) -> Callable[[], SavingsAccountYear]:
+def default_account(interest_rate) -> Callable[[], StockMarketYear]:
     return partial(account_factory, interest_rate=interest_rate)
 
 
 class TestStockMarketYear:
 
     @pytest.fixture
-    def year(self, default_account) -> SavingsAccountYear:
+    def year(self, default_account) -> StockMarketYear:
         return default_account()
 
     def test_starting_balance(self, year):
@@ -36,16 +36,10 @@ class TestStockMarketYear:
     def test_ending_balance_applies_interest_rate(self, year):
         assert year.ending_balance == 11000
 
-    def test_next_years_starting_balance_equals_this_years_ending_balance(self, year):
+    def test_next_years_values(self, year):
         next_year = year.next_year()
         assert next_year.starting_balance == year.ending_balance
-
-    def test_next_years_interest_rate_equals_this_years_interest_rate(self, year):
-        next_year = year.next_year()
         assert next_year.interest_rate == year.interest_rate
-
-    def test_next_years_starting_principal_equals_this_years_ending_principal(self, year):
-        next_year = year.next_year()
         assert next_year.starting_principal == year.ending_principal
 
     def test_interest_rate_matches_constructor(self, year):
