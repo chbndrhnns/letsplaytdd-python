@@ -106,10 +106,19 @@ class TestProjections:
     def test_interest_earned_is_starting_balance_combined_with_interest_rate(self, year):
         assert year.interest_earned == 1000
 
-    @pytest.mark.skip(reason="It's failing :/")
     def test_ending_capital_gains_includes_interest_earned(self, year):
         assert year.starting_capital_gains == 7000
-        assert year.ending_capital_gains == 4000
+        assert year.ending_capital_gains == 8000
+
+    def test_ending_capital_gains_includes_capital_gains_withdrawn(self, interest_rate):
+        year = account_factory(
+            start=10000, interest_rate=interest_rate, starting_principal=0
+        )
+        assert year.starting_capital_gains == 10000
+        year.withdraw(1000)
+        assert year.capital_gains_tax_incurred == 333
+        assert year.interest_earned == 866
+        assert year.ending_capital_gains == 10000 - 333 + 866
 
     def test_capital_gains_tax_is_included_in_ending_balance(self, year, interest_rate):
         ending_balance_multiplier = (1 + interest_rate) / interest_rate

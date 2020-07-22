@@ -31,7 +31,7 @@ class SavingsAccountYear(object):
 
     @property
     def ending_capital_gains(self):
-        return self._capital_gains_amount
+        return self._capital_gains_amount + self.interest_earned - self.capital_gains_tax_incurred
 
     @property
     def ending_principal(self):
