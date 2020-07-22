@@ -30,8 +30,10 @@ class TestStockMarketYear:
     def year(self, default_account) -> StockMarketYear:
         return default_account()
 
-    def test_starting_balance(self, year):
+    def test_starting_values(self, year):
         assert 10000, year.starting_balance
+        assert year.interest_rate == 10
+        assert year.starting_principal == 3000
 
     def test_ending_balance_applies_interest_rate(self, year):
         assert year.ending_balance == 11000
@@ -42,9 +44,6 @@ class TestStockMarketYear:
         assert next_year.interest_rate == year.interest_rate
         assert next_year.starting_principal == year.ending_principal
 
-    def test_interest_rate_matches_constructor(self, year):
-        assert year.interest_rate == 10
-
     def test_withdrawn_funds_do_not_earn_interest(self, year):
         year.withdraw(1000)
         assert year.ending_balance == 9900
@@ -53,9 +52,6 @@ class TestStockMarketYear:
         year.withdraw(1000)
         year.withdraw(3000)
         assert year.total_withdrawals == 4000
-
-    def test_starting_principal(self, year):
-        assert year.starting_principal == 3000
 
     def test_ending_principal_considers_withdrawals(self, year):
         year.withdraw(2000)
