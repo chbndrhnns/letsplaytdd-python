@@ -39,13 +39,8 @@ class StockMarketYear(object):
         return int((self.starting_balance - self.total_withdrawn) * self.interest_rate / 100)
 
     @property
-    def capital_gains_withdrawn(self):
-        result = -1 * (self.starting_principal - self.total_withdrawals)
-        return max(0, result)
-
-    @property
     def capital_gains_tax_incurred(self):
-        return int(self.capital_gains_withdrawn / (100 - self.capital_gains_tax_rate) * self.capital_gains_tax_rate)
+        return int(self._capital_gains_withdrawn() / (100 - self.capital_gains_tax_rate) * self.capital_gains_tax_rate)
 
     def next_year(self):
         result = StockMarketYear(
@@ -57,3 +52,7 @@ class StockMarketYear(object):
 
     def withdraw(self, amount):
         self.total_withdrawals += amount
+
+    def _capital_gains_withdrawn(self):
+        result = -1 * (self.starting_principal - self.total_withdrawals)
+        return max(0, result)
