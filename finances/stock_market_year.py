@@ -2,11 +2,11 @@ class StockMarketYear(object):
 
     def __init__(
             self,
-            starting_balance: int = 0,
+            starting_balance: int,
             *,
-            interest_rate: int = 0,
-            starting_principal: int = 0,
-            capital_gains_tax_rate: int = 25
+            interest_rate: int,
+            starting_principal: int,
+            capital_gains_tax_rate: int
     ):
         self.starting_balance = starting_balance
         self.interest_rate = interest_rate
@@ -46,7 +46,8 @@ class StockMarketYear(object):
         result = StockMarketYear(
             self.ending_balance,
             interest_rate=self.interest_rate,
-            starting_principal=self.ending_principal
+            starting_principal=self.ending_principal,
+            capital_gains_tax_rate=self.capital_gains_tax_rate
         )
         return result
 

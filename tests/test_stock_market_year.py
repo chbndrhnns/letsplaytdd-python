@@ -8,18 +8,21 @@ from finances.stock_market_year import StockMarketYear
 STARTING_PRINCIPAL = 3000
 STARTING_BALANCE = 10000
 INTEREST_RATE = 10
+CAPITAL_GAINS_TAX_RATE = 25
 
 
-def account_factory(*, start: int = None, interest_rate=None, starting_principal=None):
+def account_factory(*, start: int = None, interest_rate=None, starting_principal=None, tax_rate=None):
     start = start or STARTING_BALANCE
     interest_rate = interest_rate or INTEREST_RATE
+    tax_rate = tax_rate or CAPITAL_GAINS_TAX_RATE
     starting_principal = starting_principal \
         if isinstance(starting_principal, int) \
         else STARTING_PRINCIPAL
     return StockMarketYear(
         start,
         interest_rate=interest_rate,
-        starting_principal=starting_principal
+        starting_principal=starting_principal,
+        capital_gains_tax_rate=tax_rate
     )
 
 
@@ -51,6 +54,7 @@ class TestStockMarketYear:
         assert next_year.starting_balance == year.ending_balance
         assert next_year.interest_rate == year.interest_rate
         assert next_year.starting_principal == year.ending_principal
+        assert next_year.capital_gains_tax_rate == year.capital_gains_tax_rate
 
     def test_ending_principal(self, year):
         year.withdraw(1000)
