@@ -12,7 +12,12 @@ class TaxRate:
         return int(amount / (1 - self._rate) - amount)
 
     def __eq__(self, other):
-        return self._rate == other._rate
+        if isinstance(other, TaxRate):
+            return self._rate == other._rate
+        return False
+
+    def __str__(self):
+        return f'{int(self._rate * 100)} %'
 
 
 class TestTaxRate:
@@ -38,3 +43,12 @@ class TestTaxRate:
 
         assert rate_1a == rate_1b
         assert rate_1a != rate_2
+
+    def test_string(self):
+        rate_1a = TaxRate(25)
+        rate_1b = TaxRate(25)
+        rate_2 = TaxRate(33)
+
+        assert str(rate_1a) == '25 %'
+        assert str(rate_1a) == str(rate_1b)
+        assert str(rate_1a) != str(rate_2)
