@@ -11,6 +11,9 @@ class TaxRate:
     def compound_tax_for(self, amount: int):
         return int(amount / (1 - self._rate) - amount)
 
+    def __eq__(self, other):
+        return self._rate == other._rate
+
 
 class TestTaxRate:
     @pytest.mark.parametrize(
@@ -27,3 +30,11 @@ class TestTaxRate:
     def test_compound_tax_includes_tax_on_tax(self):
         rate = TaxRate(25)
         assert rate.compound_tax_for(1000) == 333
+
+    def test_value_object(self):
+        rate_1a = TaxRate(25)
+        rate_1b = TaxRate(25)
+        rate_2 = TaxRate(33)
+
+        assert rate_1a == rate_1b
+        assert rate_1a != rate_2
