@@ -15,3 +15,6 @@ class TaxRate:
 
     def __str__(self):
         return f'{int(self._rate * 100)} %'
+
+    def __repr__(self):
+        return self.__str__()
