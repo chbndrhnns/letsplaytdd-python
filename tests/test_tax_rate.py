@@ -1,13 +1,14 @@
 import pytest
 
+from finances.dollars import Dollars
 from finances.tax_rate import TaxRate
 
 
 class TestTaxRate:
     @pytest.mark.parametrize(
         'rate, amount, expected', [
-            (0, 1000, 0),
-            (25, 1000, 250),
+            (0, Dollars(1000), 0),
+            (25, Dollars(1000), 250),
             # (25, 10, 2.5)
         ]
     )
@@ -17,7 +18,7 @@ class TestTaxRate:
 
     def test_compound_tax_includes_tax_on_tax(self):
         rate = TaxRate(25)
-        assert rate.compound_tax_for(1000) == 333
+        assert rate.compound_tax_for(Dollars(1000)) == 333
 
     def test_value_object(self):
         rate_1a = TaxRate(25)

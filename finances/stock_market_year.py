@@ -43,11 +43,11 @@ class StockMarketYear:
 
     @property
     def interest_earned(self) -> Dollars:
-        return Dollars(self.interest_rate.interest_on(self.starting_balance.amount - self.total_withdrawn.amount))
+        return Dollars(self.interest_rate.interest_on(self.starting_balance - self.total_withdrawn))
 
     @property
     def capital_gains_tax_incurred(self) -> Dollars:
-        return Dollars(self.capital_gains_tax_rate.compound_tax_for(self._capital_gains_withdrawn().amount))
+        return Dollars(self.capital_gains_tax_rate.compound_tax_for(self._capital_gains_withdrawn()))
 
     def next_year(self) -> StockMarketYearT:
         return StockMarketYear(

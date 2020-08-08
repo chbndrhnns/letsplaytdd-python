@@ -81,7 +81,7 @@ class TestStockMarketYear:
 
     def test_capital_gains_tax(self, year):
         year.withdraw(4000)
-        capital_gains_tax = Dollars(year.capital_gains_tax_rate.simple_tax_for(1000))
+        capital_gains_tax = Dollars(year.capital_gains_tax_rate.simple_tax_for(Dollars(1000)))
         additional_withdrawals_to_cover_tax = Dollars(83)
         assert year.capital_gains_tax_incurred == additional_withdrawals_to_cover_tax + capital_gains_tax
         assert year.total_withdrawn == Dollars(4000) + capital_gains_tax + additional_withdrawals_to_cover_tax

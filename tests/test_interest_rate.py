@@ -1,15 +1,16 @@
+from finances.dollars import Dollars
 from finances.interest_rate import InterestRate
 
 
 class TestInterestRate:
     def test_nothing(self):
         rate = InterestRate(0)
-        assert rate.interest_on(1000) == 0
+        assert rate.interest_on(Dollars(1000)) == 0
 
     def test_interest(self):
         rate = InterestRate(10)
-        assert rate.interest_on(1000) == 100
-        assert rate.interest_on(1) == 0
+        assert rate.interest_on(Dollars(1000)) == 100
+        assert rate.interest_on(Dollars(1)) == 0
 
 
 class TestValueObject:

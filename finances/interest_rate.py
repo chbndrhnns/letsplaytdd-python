@@ -1,9 +1,12 @@
+from finances.dollars import Dollars
+
+
 class InterestRate:
     def __init__(self, rate_as_percentage):
         self._rate = rate_as_percentage
 
-    def interest_on(self, amount: int) -> int:
-        return int(self._rate * amount / 100)
+    def interest_on(self, amount: Dollars) -> int:
+        return int(self._rate * amount.amount / 100)
 
     def __eq__(self, other):
         if isinstance(other, InterestRate):
