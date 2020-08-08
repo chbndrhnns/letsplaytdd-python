@@ -1,6 +1,10 @@
+from typing import TypeVar
+
 from finances.dollars import Dollars
 from finances.interest_rate import InterestRate
 from finances.tax_rate import TaxRate
+
+StockMarketYearT = TypeVar('StockMarketYearT', bound='StockMarketYear')
 
 
 class StockMarketYear:
@@ -38,23 +42,22 @@ class StockMarketYear:
         return self.total_withdrawals + self.capital_gains_tax_incurred
 
     @property
-    def interest_earned(self):
+    def interest_earned(self) -> Dollars:
         return Dollars(self.interest_rate.interest_on(self.starting_balance.amount - self.total_withdrawn.amount))
 
     @property
     def capital_gains_tax_incurred(self) -> Dollars:
         return Dollars(self.capital_gains_tax_rate.compound_tax_for(self._capital_gains_withdrawn().amount))
 
-    def next_year(self):
-        result = StockMarketYear(
+    def next_year(self) -> StockMarketYearT:
+        return StockMarketYear(
             self.ending_balance,
             interest_rate=self.interest_rate,
             starting_principal=self.ending_principal,
             capital_gains_tax_rate=self.capital_gains_tax_rate
         )
-        return result
 
-    def withdraw(self, amount):
+    def withdraw(self, amount) -> None:
         self.total_withdrawals += Dollars(amount)
 
     def _capital_gains_withdrawn(self) -> Dollars:
