@@ -13,6 +13,9 @@ class TestOperations:
         assert Dollars(10).subtract_to_zero(Dollars(5)) == Dollars(5)
         assert Dollars(10).subtract_to_zero(Dollars(40)) == Dollars(0)
 
+    def test_to_int(self):
+        assert int(Dollars(10)) == 10
+
 
 class TestDollarValueObject:
     def test_equality(self):

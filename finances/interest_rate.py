@@ -6,7 +6,7 @@ class InterestRate:
         self._rate = rate_as_percentage
 
     def interest_on(self, amount: Dollars) -> int:
-        return int(self._rate * amount.amount / 100)
+        return int(self._rate * int(amount) / 100)
 
     def __eq__(self, other):
         if isinstance(other, InterestRate):

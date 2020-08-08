@@ -4,14 +4,12 @@ class Dollars:
     def __init__(self, amount: int):
         self._amount = amount
 
-    @property
-    def amount(self):
-        # TODO: remove
-        return self._amount
-
     def subtract_to_zero(self, other):
         if isinstance(other, Dollars):
             return max(Dollars(0), self - other)
+
+    def __int__(self):
+        return self._amount
 
     def __add__(self, other):
         if isinstance(other, Dollars):

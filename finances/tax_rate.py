@@ -6,10 +6,11 @@ class TaxRate:
         self._rate: float = rate_as_percentage / 100.0
 
     def simple_tax_for(self, amount: Dollars) -> int:
-        return int(self._rate * amount.amount)
+        return int(self._rate * int(amount))
 
     def compound_tax_for(self, amount: Dollars) -> int:
-        return int(amount.amount / (1 - self._rate) - amount.amount)
+        amount = int(amount)
+        return int(amount / (1 - self._rate) - amount)
 
     def __eq__(self, other):
         if isinstance(other, TaxRate):
