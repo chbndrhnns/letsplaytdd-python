@@ -1,3 +1,4 @@
+from finances.interest_rate import InterestRate
 from finances.tax_rate import TaxRate
 
 
@@ -7,7 +8,7 @@ class StockMarketYear(object):
             self,
             starting_balance: int,
             *,
-            interest_rate: int,
+            interest_rate: InterestRate,
             starting_principal: int,
             capital_gains_tax_rate: TaxRate
     ):
@@ -25,8 +26,7 @@ class StockMarketYear(object):
 
     @property
     def ending_balance(self):
-        modified_start = self.starting_balance - self.total_withdrawn
-        return modified_start + self.interest_earned
+        return self.starting_balance - self.total_withdrawn + self.interest_earned
 
     @property
     def ending_principal(self):
@@ -39,7 +39,7 @@ class StockMarketYear(object):
 
     @property
     def interest_earned(self):
-        return int((self.starting_balance - self.total_withdrawn) * self.interest_rate / 100)
+        return self.interest_rate.interest_on(self.starting_balance - self.total_withdrawn)
 
     @property
     def capital_gains_tax_incurred(self):

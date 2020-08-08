@@ -3,12 +3,13 @@ from typing import Callable
 
 import pytest
 
+from finances.interest_rate import InterestRate
 from finances.stock_market_year import StockMarketYear
 from finances.tax_rate import TaxRate
 
 STARTING_PRINCIPAL = 3000
 STARTING_BALANCE = 10000
-INTEREST_RATE = 10
+INTEREST_RATE = InterestRate(10)
 CAPITAL_GAINS_TAX_RATE = TaxRate(25)
 
 
@@ -40,7 +41,7 @@ class TestStockMarketYear:
 
     def test_starting_values(self, year):
         assert 10000, year.starting_balance
-        assert year.interest_rate == 10
+        assert year.interest_rate == INTEREST_RATE
         assert year.starting_principal == 3000
         assert year.capital_gains_tax_rate == CAPITAL_GAINS_TAX_RATE
 
@@ -76,7 +77,7 @@ class TestStockMarketYear:
 
     def test_capital_gains_tax(self, year):
         year.withdraw(4000)
-        capital_gains_tax =year.capital_gains_tax_rate.simple_tax_for(1000)
+        capital_gains_tax = year.capital_gains_tax_rate.simple_tax_for(1000)
         additional_withdrawals_to_cover_tax = 83
         assert year.capital_gains_tax_incurred == additional_withdrawals_to_cover_tax + capital_gains_tax
         assert year.total_withdrawn == 4000 + capital_gains_tax + additional_withdrawals_to_cover_tax
