@@ -3,22 +3,22 @@ from typing import Callable
 
 import pytest
 
-from finances.dollar import Dollar
+from finances.dollars import Dollars
 from finances.interest_rate import InterestRate
 from finances.stock_market_year import StockMarketYear
 from finances.tax_rate import TaxRate
 
-STARTING_PRINCIPAL = Dollar(3000)
-STARTING_BALANCE = Dollar(10000)
+STARTING_PRINCIPAL = Dollars(3000)
+STARTING_BALANCE = Dollars(10000)
 INTEREST_RATE = InterestRate(10)
 CAPITAL_GAINS_TAX_RATE = TaxRate(25)
 
 
 def account_factory(
         *,
-        start: Dollar = None,
+        start: Dollars = None,
         interest_rate: InterestRate = None,
-        starting_principal: Dollar = None,
+        starting_principal: Dollars = None,
         tax_rate: TaxRate = None):
     start = start or STARTING_BALANCE
     interest_rate = interest_rate or INTEREST_RATE
@@ -46,15 +46,15 @@ class TestStockMarketYear:
     def test_starting_values(self, year):
         assert 10000, year.starting_balance
         assert year.interest_rate == INTEREST_RATE
-        assert year.starting_principal == Dollar(3000)
+        assert year.starting_principal == Dollars(3000)
         assert year.capital_gains_tax_rate == CAPITAL_GAINS_TAX_RATE
 
     def test_ending_balance(self, year):
-        assert year.ending_balance == Dollar(11000), 'ending balance includes interest'
+        assert year.ending_balance == Dollars(11000), 'ending balance includes interest'
         year.withdraw(1000)
-        assert year.ending_balance == Dollar(9900), 'ending balance includes withdrawals'
+        assert year.ending_balance == Dollars(9900), 'ending balance includes withdrawals'
         year.withdraw(3000)
-        assert year.ending_balance == Dollar(6233), 'ending balance includes capital gains tax withdrawals'
+        assert year.ending_balance == Dollars(6233), 'ending balance includes capital gains tax withdrawals'
 
     def test_next_years_values(self, year):
         next_year = year.next_year()
@@ -65,30 +65,30 @@ class TestStockMarketYear:
 
     def test_ending_principal(self, year):
         year.withdraw(1000)
-        assert year.ending_principal == Dollar(9000), 'considers withdrawals'
+        assert year.ending_principal == Dollars(9000), 'considers withdrawals'
         year.withdraw(2000)
-        assert year.ending_principal == Dollar(7000), 'considers totals of multiple withdrawals'
+        assert year.ending_principal == Dollars(7000), 'considers totals of multiple withdrawals'
         year.withdraw(8000)
-        assert year.ending_principal == Dollar(0), 'never goes below zero'
+        assert year.ending_principal == Dollars(0), 'never goes below zero'
 
     def test_total_withdrawn_including_capital_gains(self, year):
         year = account_factory(
-            start=STARTING_BALANCE, interest_rate=INTEREST_RATE, starting_principal=Dollar(0)
+            start=STARTING_BALANCE, interest_rate=INTEREST_RATE, starting_principal=Dollars(0)
         )
         year.withdraw(1000)
-        assert year.capital_gains_tax_incurred == Dollar(333)
-        assert year.total_withdrawn == Dollar(1333)
+        assert year.capital_gains_tax_incurred == Dollars(333)
+        assert year.total_withdrawn == Dollars(1333)
 
     def test_capital_gains_tax(self, year):
         year.withdraw(4000)
-        capital_gains_tax = Dollar(year.capital_gains_tax_rate.simple_tax_for(1000))
-        additional_withdrawals_to_cover_tax = Dollar(83)
+        capital_gains_tax = Dollars(year.capital_gains_tax_rate.simple_tax_for(1000))
+        additional_withdrawals_to_cover_tax = Dollars(83)
         assert year.capital_gains_tax_incurred == additional_withdrawals_to_cover_tax + capital_gains_tax
-        assert year.total_withdrawn == Dollar(4000) + capital_gains_tax + additional_withdrawals_to_cover_tax
+        assert year.total_withdrawn == Dollars(4000) + capital_gains_tax + additional_withdrawals_to_cover_tax
 
     def test_interest_earned(self, year):
-        assert year.interest_earned == Dollar(1000), 'basic interest earned'
+        assert year.interest_earned == Dollars(1000), 'basic interest earned'
         year.withdraw(2000)
-        assert year.interest_earned == Dollar(800), 'withdrawals do not earn interest'
+        assert year.interest_earned == Dollars(800), 'withdrawals do not earn interest'
         year.withdraw(2000)
-        assert year.interest_earned == Dollar(566), 'capital gains taxes do not earn interest'
+        assert year.interest_earned == Dollars(566), 'capital gains taxes do not earn interest'
