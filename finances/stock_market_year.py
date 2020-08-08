@@ -1,3 +1,6 @@
+from finances.tax_rate import TaxRate
+
+
 class StockMarketYear(object):
 
     def __init__(

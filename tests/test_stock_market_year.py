@@ -4,11 +4,12 @@ from typing import Callable
 import pytest
 
 from finances.stock_market_year import StockMarketYear
+from finances.tax_rate import TaxRate
 
 STARTING_PRINCIPAL = 3000
 STARTING_BALANCE = 10000
 INTEREST_RATE = 10
-CAPITAL_GAINS_TAX_RATE = 25
+CAPITAL_GAINS_TAX_RATE = TaxRate(25)
 
 
 def account_factory(*, start: int = None, interest_rate=None, starting_principal=None, tax_rate=None):
@@ -22,7 +23,7 @@ def account_factory(*, start: int = None, interest_rate=None, starting_principal
         start,
         interest_rate=interest_rate,
         starting_principal=starting_principal,
-        capital_gains_tax_rate=tax_rate
+        capital_gains_tax_rate=tax_rate.rate
     )
 
 
@@ -41,6 +42,7 @@ class TestStockMarketYear:
         assert 10000, year.starting_balance
         assert year.interest_rate == 10
         assert year.starting_principal == 3000
+        assert year.capital_gains_tax_rate == CAPITAL_GAINS_TAX_RATE.rate
 
     def test_ending_balance(self, year):
         assert year.ending_balance == 11000, 'ending balance includes interest'
