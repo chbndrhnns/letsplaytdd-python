@@ -47,7 +47,7 @@ class StockMarketYear:
 
     @property
     def capital_gains_tax_incurred(self) -> Dollars:
-        return Dollars(self.capital_gains_tax_rate.compound_tax_for(self._capital_gains_withdrawn()))
+        return self.capital_gains_tax_rate.compound_tax_for(self._capital_gains_withdrawn())
 
     def next_year(self) -> StockMarketYearT:
         return StockMarketYear(
