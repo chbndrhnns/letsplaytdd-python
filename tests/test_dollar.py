@@ -1,6 +1,15 @@
 from finances.dollar import Dollar
 
 
+class TestOperations:
+    def test_addition(self):
+        assert Dollar(10) + Dollar(30) == Dollar(40)
+
+    def test_subtraction(self):
+        assert Dollar(10) + Dollar(30) == Dollar(40)
+        assert Dollar(10) - Dollar(40) == Dollar(-30)
+
+
 class TestDollarValueObject:
     def test_equality(self):
         dollar1a = Dollar(1)
