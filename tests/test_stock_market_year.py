@@ -23,7 +23,7 @@ def account_factory(*, start: int = None, interest_rate=None, starting_principal
         start,
         interest_rate=interest_rate,
         starting_principal=starting_principal,
-        capital_gains_tax_rate=tax_rate.rate
+        capital_gains_tax_rate=tax_rate
     )
 
 
@@ -42,7 +42,7 @@ class TestStockMarketYear:
         assert 10000, year.starting_balance
         assert year.interest_rate == 10
         assert year.starting_principal == 3000
-        assert year.capital_gains_tax_rate == CAPITAL_GAINS_TAX_RATE.rate
+        assert year.capital_gains_tax_rate == CAPITAL_GAINS_TAX_RATE
 
     def test_ending_balance(self, year):
         assert year.ending_balance == 11000, 'ending balance includes interest'
@@ -76,7 +76,7 @@ class TestStockMarketYear:
 
     def test_capital_gains_tax(self, year):
         year.withdraw(4000)
-        capital_gains_tax = int((1000 * year.capital_gains_tax_rate) / 100)
+        capital_gains_tax =year.capital_gains_tax_rate.simple_tax_for(1000)
         additional_withdrawals_to_cover_tax = 83
         assert year.capital_gains_tax_incurred == additional_withdrawals_to_cover_tax + capital_gains_tax
         assert year.total_withdrawn == 4000 + capital_gains_tax + additional_withdrawals_to_cover_tax

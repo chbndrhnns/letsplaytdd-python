@@ -9,11 +9,11 @@ class StockMarketYear(object):
             *,
             interest_rate: int,
             starting_principal: int,
-            capital_gains_tax_rate: int
+            capital_gains_tax_rate: TaxRate
     ):
         self.starting_balance = starting_balance
         self.interest_rate = interest_rate
-        self.capital_gains_tax_rate = capital_gains_tax_rate
+        self.capital_gains_tax_rate: TaxRate = capital_gains_tax_rate
 
         self._starting_principal = starting_principal
         self._capital_gains_amount = starting_balance - starting_principal
@@ -43,7 +43,7 @@ class StockMarketYear(object):
 
     @property
     def capital_gains_tax_incurred(self):
-        return int(self._capital_gains_withdrawn() / (100 - self.capital_gains_tax_rate) * self.capital_gains_tax_rate)
+        return self.capital_gains_tax_rate.compound_tax_for(self._capital_gains_withdrawn())
 
     def next_year(self):
         result = StockMarketYear(
