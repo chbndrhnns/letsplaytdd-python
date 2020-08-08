@@ -9,7 +9,7 @@ class TestInterestRate:
     def test_interest(self):
         rate = InterestRate(10)
         assert rate.interest_on(1000) == 100
-        assert rate.interest_on(1) == 0.1
+        assert rate.interest_on(1) == 0
 
 
 class TestValueObject:

@@ -1,15 +1,16 @@
+from finances.dollar import Dollar
 from finances.interest_rate import InterestRate
 from finances.tax_rate import TaxRate
 
 
-class StockMarketYear(object):
+class StockMarketYear:
 
     def __init__(
             self,
-            starting_balance: int,
+            starting_balance: Dollar,
             *,
             interest_rate: InterestRate,
-            starting_principal: int,
+            starting_principal: Dollar,
             capital_gains_tax_rate: TaxRate
     ):
         self.starting_balance = starting_balance
@@ -18,32 +19,31 @@ class StockMarketYear(object):
 
         self._starting_principal = starting_principal
         self._capital_gains_amount = starting_balance - starting_principal
-        self.total_withdrawals = 0
+        self.total_withdrawals = Dollar(0)
 
     @property
-    def starting_principal(self):
+    def starting_principal(self) -> Dollar:
         return self._starting_principal
 
     @property
-    def ending_balance(self):
+    def ending_balance(self) -> Dollar:
         return self.starting_balance - self.total_withdrawn + self.interest_earned
 
     @property
-    def ending_principal(self):
-        result = self.starting_principal - self.total_withdrawals
-        return max(0, result)
+    def ending_principal(self) -> Dollar:
+        return self.starting_balance.subtract_to_zero(self.total_withdrawals)
 
     @property
-    def total_withdrawn(self):
+    def total_withdrawn(self) -> Dollar:
         return self.total_withdrawals + self.capital_gains_tax_incurred
 
     @property
     def interest_earned(self):
-        return self.interest_rate.interest_on(self.starting_balance - self.total_withdrawn)
+        return Dollar(self.interest_rate.interest_on(self.starting_balance.amount - self.total_withdrawn.amount))
 
     @property
-    def capital_gains_tax_incurred(self):
-        return self.capital_gains_tax_rate.compound_tax_for(self._capital_gains_withdrawn())
+    def capital_gains_tax_incurred(self) -> Dollar:
+        return Dollar(self.capital_gains_tax_rate.compound_tax_for(self._capital_gains_withdrawn().amount))
 
     def next_year(self):
         result = StockMarketYear(
@@ -55,8 +55,7 @@ class StockMarketYear(object):
         return result
 
     def withdraw(self, amount):
-        self.total_withdrawals += amount
+        self.total_withdrawals += Dollar(amount)
 
-    def _capital_gains_withdrawn(self):
-        result = -1 * (self.starting_principal - self.total_withdrawals)
-        return max(0, result)
+    def _capital_gains_withdrawn(self) -> Dollar:
+        return self.total_withdrawals.subtract_to_zero(self.starting_principal)

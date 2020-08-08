@@ -1,8 +1,13 @@
 class Dollar:
     SYMBOL = 'USD'
 
-    def __init__(self, amount):
+    def __init__(self, amount: int):
         self._amount = amount
+
+    @property
+    def amount(self):
+        # TODO: remove
+        return self._amount
 
     def subtract_to_zero(self, other):
         if isinstance(other, Dollar):
