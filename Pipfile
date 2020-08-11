@@ -11,6 +11,7 @@ pytest-cov = "*"
 
 [packages]
 typer = {extras = ["all"], version = "*"}
+pysimplegui = "*"
 
 [requires]
 python_version = "3.8"
