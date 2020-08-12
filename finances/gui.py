@@ -1,6 +1,10 @@
 import PySimpleGUI as sg
 
 
+class StockMarketTable(sg.Table):
+    ...
+
+
 def gui():
     layout = [
         [sg.Text('Personal finances')],
@@ -31,7 +35,7 @@ def table():
     values = []
     values.extend(row)
     values.extend([['' for _ in range(15)] for _ in enumerate(headings)])
-    return [sg.Table(
+    return [StockMarketTable(
         values=values,
         headings=headings,
         auto_size_columns=True,
