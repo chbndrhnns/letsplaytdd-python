@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 
 from finances.dollars import Dollars
+from finances.stock_market_year import StockMarketYear
 
 COLUMN_TITLES = {
     0: 'Year',
@@ -8,8 +9,7 @@ COLUMN_TITLES = {
     2: 'Starting Principal',
     3: 'Withdrawals',
     4: 'Appreciation',
-    5: 'Deposits',
-    6: 'Ending Balance'
+    5: 'Ending Balance'
 
 }
 
@@ -17,10 +17,15 @@ COLUMN_TITLES = {
 class StockMarketTable(sg.Table):
     headings = list(COLUMN_TITLES.values())
 
-    def __init__(self, values=None, *, year, starting_balance, starting_principal):
+    def __init__(self, values=None, *, year, starting_balance, starting_principal, interest_rate,
+                 capital_gains_tax_rate):
         self._year = year
-        self._starting_balance = starting_balance
-        self._starting_principle = starting_principal
+        self._market_year = StockMarketYear(
+            starting_balance=starting_balance,
+            starting_principal=starting_principal,
+            interest_rate=interest_rate,
+            capital_gains_tax_rate=capital_gains_tax_rate
+        )
 
         row = [[year, starting_balance, starting_principal, 4, 5, 6, 7]]
         values = values or []
@@ -38,9 +43,15 @@ class StockMarketTable(sg.Table):
         if col_idx == 0:
             return self._year
         if col_idx == 1:
-            return self._starting_balance
+            return self._market_year.starting_balance
         if col_idx == 2:
-            return self._starting_principle
+            return self._market_year.starting_principal
+        if col_idx == 3:
+            return self._market_year.total_withdrawals
+        if col_idx == 4:
+            return self._market_year.appreciation
+        if col_idx == 5:
+            return self._market_year.ending_balance
         return ""
 
 
@@ -60,11 +71,9 @@ def gui():
 
 
 def table():
-    return [StockMarketTable(
-        year=2010,
-        starting_balance=Dollars(10000),
-        starting_principal=Dollars(7000)
-    )]
+    return [
+        StockMarketTable(year=2010, starting_balance=Dollars(10000), starting_principal=Dollars(7000), interest_rate=10,
+                         capital_gains_tax_rate=25)]
 
 
 if __name__ == '__main__':

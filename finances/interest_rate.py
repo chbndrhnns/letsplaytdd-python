@@ -11,6 +11,10 @@ class InterestRate:
     def __eq__(self, other):
         if isinstance(other, InterestRate):
             return self._rate == other._rate
+        return False
 
     def __str__(self):
         return f'{self._rate} %'
+
+    def __repr__(self):
+        return self.__str__()

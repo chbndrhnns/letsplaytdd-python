@@ -4,7 +4,7 @@ from finances.dollars import Dollars
 from finances.interest_rate import InterestRate
 from finances.tax_rate import TaxRate
 
-StockMarketYearT = TypeVar('StockMarketYearT', bound='StockMarketYear')
+StockMarketYearT = TypeVar('StockMarketYearT', bound='StockMarketYear')  # noqa
 
 
 class StockMarketYear:
@@ -31,7 +31,7 @@ class StockMarketYear:
 
     @property
     def ending_balance(self) -> Dollars:
-        return self.starting_balance - self.total_withdrawn + self.interest_earned
+        return self.starting_balance - self.total_withdrawn + self.appreciation
 
     @property
     def ending_principal(self) -> Dollars:
@@ -42,7 +42,7 @@ class StockMarketYear:
         return self.total_withdrawals + self.capital_gains_tax_incurred
 
     @property
-    def interest_earned(self) -> Dollars:
+    def appreciation(self) -> Dollars:
         return Dollars(self.interest_rate.interest_on(self.starting_balance - self.total_withdrawn))
 
     @property

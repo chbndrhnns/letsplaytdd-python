@@ -87,8 +87,8 @@ class TestStockMarketYear:
         assert year.total_withdrawn == Dollars(4000) + capital_gains_tax + additional_withdrawals_to_cover_tax
 
     def test_interest_earned(self, year):
-        assert year.interest_earned == Dollars(1000), 'basic interest earned'
+        assert year.appreciation == Dollars(1000), 'basic interest earned'
         year.withdraw(2000)
-        assert year.interest_earned == Dollars(800), 'withdrawals do not earn interest'
+        assert year.appreciation == Dollars(800), 'withdrawals do not earn interest'
         year.withdraw(2000)
-        assert year.interest_earned == Dollars(566), 'capital gains taxes do not earn interest'
+        assert year.appreciation == Dollars(566), 'capital gains taxes do not earn interest'

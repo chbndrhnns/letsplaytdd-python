@@ -36,3 +36,8 @@ class TestTaxRate:
         assert str(rate_1a) == '25 %'
         assert str(rate_1a) == str(rate_1b)
         assert str(rate_1a) != str(rate_2)
+
+    def test_repr(self):
+        rate = TaxRate(10)
+
+        assert repr(rate) == '10 %'

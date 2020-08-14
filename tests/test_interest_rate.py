@@ -29,3 +29,8 @@ class TestValueObject:
 
         assert str(rate1a) == str(rate1b)
         assert str(rate1a) != str(rate2)
+
+    def test_repr(self):
+        rate = InterestRate(10)
+
+        assert repr(rate) == '10 %'
