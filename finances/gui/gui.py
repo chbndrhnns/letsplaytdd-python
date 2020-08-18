@@ -1,7 +1,11 @@
+from typing import Optional, List
+
 import PySimpleGUI as sg
 
 from finances.dollars import Dollars
+from finances.interest_rate import InterestRate
 from finances.stock_market_year import StockMarketYear
+from finances.tax_rate import TaxRate
 
 COLUMN_TITLES = {
     0: 'Year',
@@ -17,55 +21,77 @@ COLUMN_TITLES = {
 class StockMarketTable(sg.Table):
     headings = list(COLUMN_TITLES.values())
 
-    def __init__(self, values=None, *, starting_year, starting_balance, starting_principal, interest_rate,
-                 capital_gains_tax_rate, ending_year):
-        self._year = starting_year
-        self._market_year = StockMarketYear(
+    def __init__(self, *, starting_year: int, starting_balance: Dollars, starting_principal: Dollars,
+                 interest_rate: InterestRate,
+                 capital_gains_tax_rate: TaxRate, ending_year: int):
+
+        self._starting_year = starting_year
+        self._ending_year = ending_year
+
+        self._years: List[StockMarketYear] = [None] * self.row_count
+        values = self._populate_years(starting_balance=starting_balance, starting_principal=starting_principal,
+                                      interest_rate=interest_rate,
+                                      capital_gains_tax_rate=capital_gains_tax_rate)
+
+        super().__init__(
+            values=values,
+            key='years',
+            headings=self.headings,
+            auto_size_columns=True,
+            num_rows=20
+        )
+
+    @property
+    def row_count(self):
+        return self._ending_year - self._starting_year + 1
+
+    def _populate_years(self, *, starting_balance, starting_principal, interest_rate,
+                        capital_gains_tax_rate):
+
+        values = []
+        self._years[0] = StockMarketYear(
             starting_balance=starting_balance,
             starting_principal=starting_principal,
             interest_rate=interest_rate,
             capital_gains_tax_rate=capital_gains_tax_rate
         )
-        rows_to_create = ending_year - starting_year + 1
+        for i in range(1, self.row_count):
+            year: StockMarketYear = self._years[i - 1].next_year()
+            self._years[i] = year
+            values.append([
+                self._starting_year + i,
+                year.starting_balance,
+                year.starting_principal,
+                year.total_withdrawals,
+                year.appreciation,
+                year.ending_balance,
+                7
+            ])
 
-        values = values or [
-            [starting_year, starting_balance, starting_principal, 4, 5, 6, 7]
-        ] * rows_to_create
-
-        super().__init__(
-            values=values,
-            headings=self.headings,
-            auto_size_columns=True,
-            num_rows=15
-        )
-
-    @property
-    def row_count(self):
-        return len(self.Values)
+        return values
 
     def value_at(self, row_idx, col_idx):
-        if row_idx == 41:
-            return 2050
+        year = self._years[row_idx]
 
         if col_idx == 0:
-            return self._year
+            return self._starting_year + row_idx
         if col_idx == 1:
-            return self._market_year.starting_balance
+            return year.starting_balance
         if col_idx == 2:
-            return self._market_year.starting_principal
+            return year.starting_principal
         if col_idx == 3:
-            return self._market_year.total_withdrawals
+            return year.total_withdrawals
         if col_idx == 4:
-            return self._market_year.appreciation
+            return year.appreciation
         if col_idx == 5:
-            return self._market_year.ending_balance
+            return year.ending_balance
         return ""
 
 
 def gui():
     layout = [
         [sg.Text('Personal finances')],
-        table(),
+        [table()],
         [sg.OK(), sg.Cancel()]
     ]
 
@@ -78,9 +104,10 @@ def gui():
 
 
 def table():
-    return [
-        StockMarketTable(starting_year=2010, starting_balance=Dollars(10000), starting_principal=Dollars(7000),
-                         interest_rate=10, capital_gains_tax_rate=25, ending_year=2050)]
+    return StockMarketTable(
+        starting_year=2010, starting_balance=Dollars(10000), starting_principal=Dollars(7000),
+        interest_rate=InterestRate(10), capital_gains_tax_rate=TaxRate(25), ending_year=2050
+    )
 
 
 if __name__ == '__main__':

@@ -39,5 +39,7 @@ class TestStockMarketTable:
 
     def test_multiple_rows(self, table):
         assert STARTING_YEAR == table.value_at(0, 0)
+        assert STARTING_BALANCE == table.value_at(0, 1)
         assert table.row_count == ENDING_YEAR - STARTING_YEAR + 1
-        assert ENDING_YEAR == table.value_at(41, 0)
+        assert ENDING_YEAR == table.value_at(40, 0)
+        assert Dollars(11000) == table.value_at(1, 1)
