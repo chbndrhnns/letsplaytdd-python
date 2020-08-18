@@ -6,12 +6,11 @@ def gui():
         [sg.Text('Personal finances')],
         [sg.Table(
             headings=['One', 'Two'],
-            values=[[20000, 2000]],
+            values=[[x, 2, 3] for x in range(80)],
             auto_size_columns=True
         )],
         [sg.OK(), sg.Cancel()]
     ]
-
     window = sg.Window(
         title="Personal finances",
         layout=layout,
