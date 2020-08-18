@@ -30,12 +30,12 @@ class TestStockMarketTable:
         assert table.ColumnHeadings[2] == 'Starting Principal'
 
     def test_one_row(self, table):
-        assert table.value_at(0, 0) == STARTING_YEAR
-        assert table.value_at(0, 1) == STARTING_BALANCE
-        assert table.value_at(0, 2) == STARTING_PRINCIPAL
-        assert table.value_at(0, 3) == Dollars(0)
-        assert table.value_at(0, 4) == Dollars(1000)
-        assert table.value_at(0, 5) == Dollars(11000)
+        assert table.value_at(0, 0) == STARTING_YEAR, 'year'
+        assert table.value_at(0, 1) == STARTING_BALANCE, 'starting balance'
+        assert table.value_at(0, 2) == STARTING_PRINCIPAL, 'starting principal'
+        assert table.value_at(0, 3) == Dollars(0), 'withdrawals'
+        assert table.value_at(0, 4) == Dollars(1000), 'appreciation'
+        assert table.value_at(0, 5) == Dollars(11000), 'ending balance'
 
     def test_multiple_rows(self, table):
         assert STARTING_YEAR == table.value_at(0, 0)
