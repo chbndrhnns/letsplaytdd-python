@@ -95,7 +95,13 @@ def gui():
         [sg.OK(), sg.Cancel()]
     ]
 
-    window = sg.Window(title="Personal finances", layout=layout, margins=(5, 5), size=(900, 600))
+    window = sg.Window(
+        title="Personal finances",
+        layout=layout,
+        margins=(5, 5),
+        size=(900, 600),
+        font=('San Francisco', 15)
+    )
     while True:
         event, values = window.read()
         print(event)
