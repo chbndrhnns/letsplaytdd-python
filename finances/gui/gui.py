@@ -3,6 +3,7 @@ import PySimpleGUI as sg
 from finances.dollars import Dollars
 from finances.gui import StockMarketTableModel
 from finances.interest_rate import InterestRate
+from finances.stock_market_account import StockMarketAccount
 from finances.tax_rate import TaxRate
 
 
@@ -27,11 +28,15 @@ def gui():
             break
 
 
-def table():
-    return StockMarketTableModel(
+def account():
+    return StockMarketAccount(
         starting_year=2010, starting_balance=Dollars(10000), starting_principal=Dollars(7000),
         interest_rate=InterestRate(10), capital_gains_tax_rate=TaxRate(25), ending_year=2050
     )
+
+
+def table():
+    return StockMarketTableModel(account())
 
 
 if __name__ == '__main__':

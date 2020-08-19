@@ -8,8 +8,8 @@ class StockMarketAccount(object):
     def __init__(self, *, starting_year, ending_year, starting_principal: Dollars, starting_balance: Dollars,
                  interest_rate: InterestRate,
                  capital_gains_tax_rate: TaxRate):
-        self._starting_year = starting_year
-        self._ending_year = ending_year
+        self.starting_year = starting_year
+        self.ending_year = ending_year
         self.years: StockMarketYear = [None] * self.number_of_years
 
         self._populate_years(
@@ -21,7 +21,7 @@ class StockMarketAccount(object):
 
     @property
     def number_of_years(self) -> int:
-        return self._ending_year - self._starting_year + 1
+        return self.ending_year - self.starting_year + 1
 
     def get_year(self, offset: int) -> StockMarketYear:
         return self.years[offset]

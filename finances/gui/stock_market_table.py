@@ -1,9 +1,6 @@
 import PySimpleGUI as sg
 
-from finances.dollars import Dollars
-from finances.interest_rate import InterestRate
 from finances.stock_market_account import StockMarketAccount
-from finances.tax_rate import TaxRate
 
 COLUMN_TITLES_MAP = {
     0: 'Year',
@@ -19,29 +16,17 @@ COLUMN_TITLES_MAP = {
 class StockMarketTableModel(sg.Table):
     headings = [f' {col_name} ' for col_name in COLUMN_TITLES_MAP.values()]
 
-    def __init__(self, *, starting_year: int, starting_balance: Dollars, starting_principal: Dollars,
-                 interest_rate: InterestRate,
-                 capital_gains_tax_rate: TaxRate, ending_year: int):
+    def __init__(self, account: StockMarketAccount = None):
 
-        self._starting_year = starting_year
-        self._ending_year = ending_year
-
-        self._account = StockMarketAccount(
-            starting_year=starting_year,
-            ending_year=ending_year,
-            starting_principal=starting_principal,
-            starting_balance=starting_balance,
-            interest_rate=interest_rate,
-            capital_gains_tax_rate=capital_gains_tax_rate
-        )
+        self._account = account
 
         super().__init__(
             values=self.rows,
-            key='years',
+            key='years',  # noqa
             headings=self.headings,
             auto_size_columns=True,
             num_rows=20,
-            font=('Menlo', 15)
+            font=('Menlo', 15)  # noqa
         )
 
     @property
@@ -62,7 +47,7 @@ class StockMarketTableModel(sg.Table):
         year = self._account.get_year(row_idx)
 
         if col_idx == 0:
-            return self._starting_year + row_idx
+            return self._account.starting_year + row_idx
         if col_idx == 1:
             return year.starting_balance
         if col_idx == 2:

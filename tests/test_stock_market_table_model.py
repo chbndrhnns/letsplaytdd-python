@@ -3,6 +3,7 @@ import pytest
 from finances.dollars import Dollars
 from finances.gui import StockMarketTableModel
 from finances.interest_rate import InterestRate
+from finances.stock_market_account import StockMarketAccount
 from finances.tax_rate import TaxRate
 
 INTEREST_RATE = InterestRate(10)
@@ -15,13 +16,20 @@ APPRECIATION = Dollars(1000)
 
 
 class TestStockMarketTable:
+    @pytest.fixture
+    def account(self):
+        return StockMarketAccount(
+            starting_year=STARTING_YEAR,
+            ending_year=ENDING_YEAR,
+            starting_principal=STARTING_PRINCIPAL,
+            starting_balance=STARTING_BALANCE,
+            interest_rate=INTEREST_RATE,
+            capital_gains_tax_rate=CAPITAL_GAINS_TAX_RATE
+        )
 
     @pytest.fixture
-    def table(self):
-        return StockMarketTableModel(
-            starting_year=STARTING_YEAR, starting_balance=STARTING_BALANCE,
-            starting_principal=STARTING_PRINCIPAL, interest_rate=INTEREST_RATE,
-            capital_gains_tax_rate=CAPITAL_GAINS_TAX_RATE, ending_year=ENDING_YEAR)
+    def table(self, account):
+        return StockMarketTableModel(account)
 
     def test_columns(self, table):
         assert len(table.ColumnHeadings) == 6
