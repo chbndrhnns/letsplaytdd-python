@@ -25,9 +25,9 @@ class TestStockMarketTable:
 
     def test_columns(self, table):
         assert len(table.ColumnHeadings) == 6
-        assert table.ColumnHeadings[0] == 'Year'
-        assert table.ColumnHeadings[1] == 'Starting Balance'
-        assert table.ColumnHeadings[2] == 'Starting Principal'
+        assert table.ColumnHeadings[0] == ' Year '
+        assert table.ColumnHeadings[1] == ' Starting Balance '
+        assert table.ColumnHeadings[2] == ' Starting Principal '
 
     def test_one_row(self, table):
         assert table.value_at(0, 0) == STARTING_YEAR, 'year'

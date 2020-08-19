@@ -8,7 +8,6 @@ StockMarketYearT = TypeVar('StockMarketYearT', bound='StockMarketYear')  # noqa
 
 
 class StockMarketYear:
-
     def __init__(
             self,
             starting_balance: Dollars,

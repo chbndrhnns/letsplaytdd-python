@@ -10,7 +10,7 @@ class StockMarketAccount(object):
                  capital_gains_tax_rate: TaxRate):
         self._starting_year = starting_year
         self._ending_year = ending_year
-        self._years: StockMarketYear = [None] * self.number_of_years
+        self.years: StockMarketYear = [None] * self.number_of_years
 
         self._populate_years(
             starting_balance=starting_balance,
@@ -23,8 +23,11 @@ class StockMarketAccount(object):
     def number_of_years(self) -> int:
         return self._ending_year - self._starting_year + 1
 
+    def get_year(self, offset: int) -> StockMarketYear:
+        return self.years[offset]
+
     def _populate_years(self, *, starting_balance, starting_principal, interest_rate, capital_gains_tax_rate):
-        self._years[0] = StockMarketYear(
+        self.years[0] = StockMarketYear(
             starting_balance=starting_balance,
             starting_principal=starting_principal,
             capital_gains_tax_rate=capital_gains_tax_rate,
@@ -32,7 +35,4 @@ class StockMarketAccount(object):
         )
 
         for i in range(1, self.number_of_years):
-            self._years[i] = self._years[i - 1].next_year()
-
-    def get_year(self, offset: int) -> StockMarketYear:
-        return self._years[offset]
+            self.years[i] = self.years[i - 1].next_year()
