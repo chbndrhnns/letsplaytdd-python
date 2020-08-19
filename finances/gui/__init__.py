@@ -1,1 +1,1 @@
-from finances.gui.stock_market_table import StockMarketTable
+from finances.gui.stock_market_table import StockMarketTableModel

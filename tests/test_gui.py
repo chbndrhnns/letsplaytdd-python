@@ -1,7 +1,7 @@
 import pytest
 
 from finances.dollars import Dollars
-from finances.gui import StockMarketTable
+from finances.gui import StockMarketTableModel
 from finances.interest_rate import InterestRate
 from finances.tax_rate import TaxRate
 
@@ -18,7 +18,7 @@ class TestStockMarketTable:
 
     @pytest.fixture
     def table(self):
-        return StockMarketTable(
+        return StockMarketTableModel(
             starting_year=STARTING_YEAR, starting_balance=STARTING_BALANCE,
             starting_principal=STARTING_PRINCIPAL, interest_rate=INTEREST_RATE,
             capital_gains_tax_rate=CAPITAL_GAINS_TAX_RATE, ending_year=ENDING_YEAR)

@@ -16,7 +16,7 @@ COLUMN_TITLES_MAP = {
 }
 
 
-class StockMarketTable(sg.Table):
+class StockMarketTableModel(sg.Table):
     headings = [f' {col_name} ' for col_name in COLUMN_TITLES_MAP.values()]
 
     def __init__(self, *, starting_year: int, starting_balance: Dollars, starting_principal: Dollars,
