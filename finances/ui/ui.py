@@ -1,4 +1,4 @@
-import PySimpleGUI as sg
+import PySimpleGUI as sg  # type: ignore
 
 from finances.domain.dollars import Dollars
 from finances.domain.year import Year

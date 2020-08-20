@@ -1,12 +1,10 @@
-from typing import TypeVar
+from __future__ import annotations
 
 from finances.domain.base_class import FinanceBase
 from finances.domain.dollars import Dollars
 from finances.domain.interest_rate import InterestRate
 from finances.domain.tax_rate import TaxRate
 from finances.domain.year import Year
-
-StockMarketYearT = TypeVar('StockMarketYearT', bound='StockMarketYear')  # noqa
 
 
 class StockMarketYear(FinanceBase):
@@ -56,7 +54,7 @@ class StockMarketYear(FinanceBase):
     def capital_gains_tax_incurred(self) -> Dollars:
         return self.capital_gains_tax_rate.compound_tax_for(self._capital_gains_withdrawn())
 
-    def next_year(self) -> StockMarketYearT:
+    def next_year(self) -> StockMarketYear:
         return StockMarketYear(
             starting_balance=self.ending_balance,
             year=self._year.next_year,

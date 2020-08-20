@@ -1,3 +1,5 @@
+from typing import List, Optional
+
 from finances.domain.base_class import FinanceBase
 from finances.domain.dollars import Dollars
 from finances.domain.interest_rate import InterestRate
@@ -12,7 +14,7 @@ class StockMarketAccount(FinanceBase):
                  capital_gains_tax_rate: TaxRate):
         self.starting_year: Year = starting_year
         self.ending_year: Year = ending_year
-        self.years: StockMarketYear = [None] * self.number_of_years
+        self.years: List[StockMarketYear] = [None] * self.number_of_years  # type: ignore
 
         self._populate_years(
             starting_balance=starting_balance,

@@ -8,6 +8,7 @@ pytest = "*"
 pytest-mock = "*"
 pytest-watch = "*"
 pytest-cov = "*"
+mypy = "*"
 
 [packages]
 typer = {extras = ["all"], version = "*"}

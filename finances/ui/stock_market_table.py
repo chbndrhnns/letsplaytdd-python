@@ -1,4 +1,4 @@
-import PySimpleGUI as sg
+import PySimpleGUI as sg  # type: ignore
 
 from finances.domain.stock_market_account import StockMarketAccount
 
