@@ -64,7 +64,7 @@ class StockMarketYear(FinanceBase):
         )
 
     def withdraw(self, amount) -> None:
-        self.total_withdrawals += Dollars(amount)
+        self.total_withdrawals += amount
 
     def _capital_gains_withdrawn(self) -> Dollars:
         return self.total_withdrawals.subtract_to_zero(self.starting_principal)

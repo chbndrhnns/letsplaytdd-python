@@ -21,9 +21,9 @@ class TestStockMarketYear:
 
     def test_ending_balance(self, year):
         assert year.ending_balance == Dollars(11000), 'ending balance includes interest'
-        year.withdraw(1000)
+        year.withdraw(Dollars(1000))
         assert year.ending_balance == Dollars(9900), 'ending balance includes withdrawals'
-        year.withdraw(3000)
+        year.withdraw(Dollars(3000))
         assert year.ending_balance == Dollars(6233), 'ending balance includes capital gains tax withdrawals'
 
     def test_next_years_values(self, year):
@@ -35,23 +35,34 @@ class TestStockMarketYear:
         assert next_year.year == YEAR.next_year
 
     def test_ending_principal(self, year):
-        year.withdraw(1000)
+        year.withdraw(Dollars(1000))
         assert year.ending_principal == Dollars(2000), 'considers withdrawals'
-        year.withdraw(500)
+        year.withdraw(Dollars(500))
         assert year.ending_principal == Dollars(1500), 'considers totals of multiple withdrawals'
-        year.withdraw(3000)
+        year.withdraw(Dollars(3000))
         assert year.ending_principal == Dollars(0), 'never goes below zero'
 
     def test_total_withdrawn_including_capital_gains(self, year):
         year = year_factory(
             start=STARTING_BALANCE, interest_rate=INTEREST_RATE, starting_principal=Dollars(0)
         )
-        year.withdraw(1000)
+        year.withdraw(Dollars(1000))
         assert year.capital_gains_tax_incurred == Dollars(333)
         assert year.total_withdrawn == Dollars(1333)
 
+    @pytest.mark.skip(reason='wip')
+    def test_capital_gains_tax_is_paid_first(self, year):
+        capital_gains = STARTING_BALANCE - STARTING_PRINCIPAL
+        assert Dollars(7000) == capital_gains
+        year.withdraw(capital_gains)
+
+        assert Dollars(
+            2333) == year.capital_gains_tax_incurred, 'pay tax on all withdrawals until all capital gains withdrawn'
+        year.withdraw(Dollars(1000))
+        assert Dollars(2333) == year.capital_gains_tax_incurred, 'pay no more tax once all capital gains are withdrawn'
+
     def test_capital_gains_tax(self, year):
-        year.withdraw(4000)
+        year.withdraw(Dollars(4000))
         capital_gains_tax = year.capital_gains_tax_rate.simple_tax_for(Dollars(1000))
         additional_withdrawals_to_cover_tax = Dollars(83)
         assert year.capital_gains_tax_incurred == additional_withdrawals_to_cover_tax + capital_gains_tax
@@ -59,7 +70,7 @@ class TestStockMarketYear:
 
     def test_interest_earned(self, year):
         assert year.appreciation == Dollars(1000), 'basic interest earned'
-        year.withdraw(2000)
+        year.withdraw(Dollars(2000))
         assert year.appreciation == Dollars(800), 'withdrawals do not earn interest'
-        year.withdraw(2000)
+        year.withdraw(Dollars(2000))
         assert year.appreciation == Dollars(567), 'capital gains taxes do not earn interest'
