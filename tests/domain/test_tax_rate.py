@@ -37,6 +37,15 @@ class TestTaxRate:
         assert str(rate_1a) == str(rate_1b)
         assert str(rate_1a) != str(rate_2)
 
+    def test_hash(self):
+        rate_1a = TaxRate(25)
+        rate_1b = TaxRate(25)
+        rate_2 = TaxRate(33)
+
+        assert hash(rate_1a) == hash(rate_1a)
+        assert hash(rate_1a) == hash(rate_1b)
+        assert hash(rate_1a) != hash(rate_2)
+
     def test_repr(self):
         rate = TaxRate(10)
 

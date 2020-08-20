@@ -47,5 +47,8 @@ class Dollars(FinanceBase):
     def __str__(self):
         return f'{self.SYMBOL}{self.rounded_amount:.2f}'
 
+    def __hash__(self):
+        return hash(self._amount, )
+
     def percentage(self, percent: float) -> Dollars:
         return Dollars(self._amount * percent / 100.0)

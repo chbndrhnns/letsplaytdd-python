@@ -10,6 +10,14 @@ class TestYear:
         assert year1a == year1b
         assert year1a != year2
 
+    def test_hash(self):
+        year1a = Year(2000)
+        year1b = Year(2000)
+        year2 = Year(1998)
+
+        assert hash(year1a) == hash(year1b)
+        assert hash(year1a) != hash(year2)
+
     def test_str(self):
         year = Year(2000)
         assert str(year) == '2000'

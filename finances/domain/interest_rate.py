@@ -18,5 +18,8 @@ class InterestRate(FinanceBase):
     def __str__(self):
         return f'{self._rate_as_percentage} %'
 
+    def __hash__(self):
+        return hash(self._rate_as_percentage, )
+
     def __repr__(self):
         return self.__str__()

@@ -49,3 +49,11 @@ class TestDollarValueObject:
 
         assert str(dollars1a) == str(dollars1b)
         assert str(dollars1a) != str(dollars2)
+
+    def test_hash(self):
+        dollars1a = Dollars(1)
+        dollars1b = Dollars(1)
+        dollars2 = Dollars(2)
+
+        assert hash(dollars1a) == hash(dollars1b)
+        assert hash(dollars1a) != hash(dollars2)

@@ -19,5 +19,8 @@ class TaxRate(FinanceBase):
             return self._rate_as_percentage == other._rate_as_percentage
         return False
 
+    def __hash__(self):
+        return hash(self._rate_as_percentage, )
+
     def __str__(self):
         return f'{int(self._rate_as_percentage)} %'
