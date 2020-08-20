@@ -1,15 +1,4 @@
-import typer
-
-from finances.domain.stock_market_year import StockMarketYear
-
-
-def main():
-    account = StockMarketYear(10000, interest_rate=10)
-
-    for year in range(60):
-        typer.echo(f'Year {year}: {account.ending_balance}')
-        account = account.next_year()
-
+from finances.ui.ui import run_app
 
 if __name__ == '__main__':
-    typer.run(main)
+    run_app()

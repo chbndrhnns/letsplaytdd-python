@@ -8,7 +8,7 @@ from finances.domain.stock_market_account import StockMarketAccount
 from finances.domain.tax_rate import TaxRate
 
 
-def gui():
+def run_app():
     layout = [
         [sg.Text('Personal finances')],
         [table()],
@@ -41,4 +41,4 @@ def table():
 
 
 if __name__ == '__main__':
-    gui()
+    run_app()
