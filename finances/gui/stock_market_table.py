@@ -17,7 +17,7 @@ class StockMarketTableModel(sg.Table):
     headings = [f' {col_name} ' for col_name in
                 COLUMN_TITLES_MAP.values()]  # add space to tweak column width calculations
 
-    def __init__(self, account: StockMarketAccount = None):
+    def __init__(self, account: StockMarketAccount):
 
         self._account = account
 
