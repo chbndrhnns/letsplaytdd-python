@@ -3,6 +3,7 @@ from typing import TypeVar
 from finances.domain.dollars import Dollars
 from finances.domain.interest_rate import InterestRate
 from finances.domain.tax_rate import TaxRate
+from finances.domain.year import Year
 
 StockMarketYearT = TypeVar('StockMarketYearT', bound='StockMarketYear')  # noqa
 
@@ -12,7 +13,7 @@ class StockMarketYear:
             self,
             *,
             starting_balance: Dollars,
-            year: int,
+            year: Year,
             interest_rate: InterestRate,
             starting_principal: Dollars,
             capital_gains_tax_rate: TaxRate
@@ -21,7 +22,7 @@ class StockMarketYear:
         self.interest_rate = interest_rate
         self.capital_gains_tax_rate: TaxRate = capital_gains_tax_rate
 
-        self._year = year
+        self._year: Year = year
         self._starting_principal = starting_principal
         self._capital_gains_amount = starting_balance - starting_principal
         self.total_withdrawals = Dollars(0)
@@ -57,7 +58,7 @@ class StockMarketYear:
     def next_year(self) -> StockMarketYearT:
         return StockMarketYear(
             starting_balance=self.ending_balance,
-            year=self._year + 1,
+            year=self._year.next_year,
             interest_rate=self.interest_rate,
             starting_principal=self.ending_principal,
             capital_gains_tax_rate=self.capital_gains_tax_rate

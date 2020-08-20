@@ -1,9 +1,10 @@
 from finances.domain.dollars import Dollars
 from finances.domain.stock_market_account import StockMarketAccount
+from finances.domain.year import Year
 from tests.conftest import STARTING_BALANCE, STARTING_PRINCIPAL, INTEREST_RATE, CAPITAL_GAINS_TAX_RATE
 
-STARTING_YEAR = 2010
-ENDING_YEAR = 2050
+STARTING_YEAR = Year(2010)
+ENDING_YEAR = Year(2050)
 
 
 class TestStockMarketAccount:

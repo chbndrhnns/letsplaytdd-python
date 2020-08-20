@@ -1,6 +1,7 @@
 import pytest
 
 from finances.domain.dollars import Dollars
+from finances.domain.year import Year
 from finances.ui import StockMarketTableModel
 from finances.domain.interest_rate import InterestRate
 from finances.domain.stock_market_account import StockMarketAccount
@@ -10,8 +11,8 @@ INTEREST_RATE = InterestRate(10)
 CAPITAL_GAINS_TAX_RATE = TaxRate(25)
 STARTING_PRINCIPAL = Dollars(7000)
 STARTING_BALANCE = Dollars(10000)
-STARTING_YEAR = 2010
-ENDING_YEAR = 2050
+STARTING_YEAR = Year(2010)
+ENDING_YEAR = Year(2050)
 APPRECIATION = Dollars(1000)
 
 

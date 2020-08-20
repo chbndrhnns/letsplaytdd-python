@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 
 from finances.domain.dollars import Dollars
+from finances.domain.year import Year
 from finances.ui import StockMarketTableModel
 from finances.domain.interest_rate import InterestRate
 from finances.domain.stock_market_account import StockMarketAccount
@@ -30,8 +31,8 @@ def gui():
 
 def account():
     return StockMarketAccount(
-        starting_year=2010, starting_balance=Dollars(10000), starting_principal=Dollars(7000),
-        interest_rate=InterestRate(10), capital_gains_tax_rate=TaxRate(25), ending_year=2050
+        starting_year=Year(2010), starting_balance=Dollars(10000), starting_principal=Dollars(7000),
+        interest_rate=InterestRate(10), capital_gains_tax_rate=TaxRate(25), ending_year=Year(2050)
     )
 
 

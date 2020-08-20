@@ -18,6 +18,15 @@ class TestYear:
         year = Year(2001)
         assert repr(year) == '2001'
 
+    def test_add(self):
+        assert Year(2000) + 5 == Year(2005)
+        assert Year(2020) + Year(2030) == 10
+
+    def test_sub(self):
+        assert Year(1998) - 5 == Year(1993)
+        assert Year(2002) - Year(1998) == 4
+        assert Year(1998) - Year(2002) == 4
+
     def test_next_year(self):
         year = Year(2020)
         assert year.next_year == Year(2021)

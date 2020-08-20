@@ -32,7 +32,7 @@ class TestStockMarketYear:
         assert next_year.interest_rate == year.interest_rate
         assert next_year.starting_principal == year.ending_principal
         assert next_year.capital_gains_tax_rate == year.capital_gains_tax_rate
-        assert next_year.year == YEAR + 1
+        assert next_year.year == YEAR.next_year
 
     def test_ending_principal(self, year):
         year.withdraw(1000)

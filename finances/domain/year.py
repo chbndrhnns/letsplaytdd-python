@@ -8,6 +8,22 @@ class Year:
     def next_year(self):
         return Year(self._year + 1)
 
+    def __add__(self, other):
+        if isinstance(other, int):
+            return Year(self._year + other)
+        if isinstance(other, Year):
+            return abs(self._year - other._year)
+
+        raise ValueError('Unsupported operator')
+
+    def __sub__(self, other):
+        if isinstance(other, int):
+            return Year(self._year - other)
+        if isinstance(other, Year):
+            return abs(self._year - other._year)
+
+        raise ValueError('Unsupported operator')
+
     def __eq__(self, other):
         if isinstance(other, Year):
             return self._year == other._year
