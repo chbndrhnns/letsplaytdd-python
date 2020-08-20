@@ -47,7 +47,7 @@ class StockMarketTableModel(sg.Table):
         year = self._account.get_year(row_idx)
 
         if col_idx == 0:
-            return self._account.starting_year + row_idx
+            return year.year
         if col_idx == 1:
             return year.starting_balance
         if col_idx == 2:

@@ -28,6 +28,7 @@ class StockMarketAccount(object):
 
     def _populate_years(self, *, starting_balance, starting_principal, interest_rate, capital_gains_tax_rate):
         self.years[0] = StockMarketYear(
+            year=self.starting_year,
             starting_balance=starting_balance,
             starting_principal=starting_principal,
             capital_gains_tax_rate=capital_gains_tax_rate,

@@ -1,10 +1,10 @@
 import pytest
 
 from finances.dollars import Dollars
-from finances.interest_rate import InterestRate
 from finances.stock_market_year import StockMarketYear
-from finances.tax_rate import TaxRate
-from tests.conftest import STARTING_BALANCE, INTEREST_RATE, CAPITAL_GAINS_TAX_RATE, year_factory
+from tests.conftest import STARTING_BALANCE, INTEREST_RATE, CAPITAL_GAINS_TAX_RATE, year_factory, YEAR
+
+STARTING_PRINCIPAL = Dollars(3000)
 
 
 class TestStockMarketYear:
@@ -16,8 +16,9 @@ class TestStockMarketYear:
     def test_starting_values(self, year):
         assert 10000, year.starting_balance
         assert year.interest_rate == INTEREST_RATE
-        assert year.starting_principal == Dollars(3000)
+        assert year.starting_principal == STARTING_PRINCIPAL
         assert year.capital_gains_tax_rate == CAPITAL_GAINS_TAX_RATE
+        assert year.year == YEAR
 
     def test_ending_balance(self, year):
         assert year.ending_balance == Dollars(11000), 'ending balance includes interest'
@@ -32,6 +33,7 @@ class TestStockMarketYear:
         assert next_year.interest_rate == year.interest_rate
         assert next_year.starting_principal == year.ending_principal
         assert next_year.capital_gains_tax_rate == year.capital_gains_tax_rate
+        assert next_year.year == YEAR + 1
 
     def test_ending_principal(self, year):
         year.withdraw(1000)

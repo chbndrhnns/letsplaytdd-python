@@ -10,8 +10,9 @@ StockMarketYearT = TypeVar('StockMarketYearT', bound='StockMarketYear')  # noqa
 class StockMarketYear:
     def __init__(
             self,
-            starting_balance: Dollars,
             *,
+            starting_balance: Dollars,
+            year: int,
             interest_rate: InterestRate,
             starting_principal: Dollars,
             capital_gains_tax_rate: TaxRate
@@ -20,9 +21,14 @@ class StockMarketYear:
         self.interest_rate = interest_rate
         self.capital_gains_tax_rate: TaxRate = capital_gains_tax_rate
 
+        self._year = year
         self._starting_principal = starting_principal
         self._capital_gains_amount = starting_balance - starting_principal
         self.total_withdrawals = Dollars(0)
+
+    @property
+    def year(self):
+        return self._year
 
     @property
     def starting_principal(self) -> Dollars:
@@ -50,7 +56,8 @@ class StockMarketYear:
 
     def next_year(self) -> StockMarketYearT:
         return StockMarketYear(
-            self.ending_balance,
+            starting_balance=self.ending_balance,
+            year=self._year + 1,
             interest_rate=self.interest_rate,
             starting_principal=self.ending_principal,
             capital_gains_tax_rate=self.capital_gains_tax_rate
