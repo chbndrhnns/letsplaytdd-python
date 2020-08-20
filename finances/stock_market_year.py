@@ -40,7 +40,7 @@ class StockMarketYear:
 
     @property
     def ending_principal(self) -> Dollars:
-        return self.starting_balance.subtract_to_zero(self.total_withdrawals)
+        return self.starting_principal.subtract_to_zero(self.total_withdrawals)
 
     @property
     def total_withdrawn(self) -> Dollars:

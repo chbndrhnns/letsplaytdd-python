@@ -2,9 +2,8 @@ import pytest
 
 from finances.dollars import Dollars
 from finances.stock_market_year import StockMarketYear
-from tests.conftest import STARTING_BALANCE, INTEREST_RATE, CAPITAL_GAINS_TAX_RATE, year_factory, YEAR
-
-STARTING_PRINCIPAL = Dollars(3000)
+from tests.conftest import STARTING_BALANCE, INTEREST_RATE, CAPITAL_GAINS_TAX_RATE, year_factory, YEAR, \
+    STARTING_PRINCIPAL
 
 
 class TestStockMarketYear:
@@ -37,10 +36,10 @@ class TestStockMarketYear:
 
     def test_ending_principal(self, year):
         year.withdraw(1000)
-        assert year.ending_principal == Dollars(9000), 'considers withdrawals'
-        year.withdraw(2000)
-        assert year.ending_principal == Dollars(7000), 'considers totals of multiple withdrawals'
-        year.withdraw(8000)
+        assert year.ending_principal == Dollars(2000), 'considers withdrawals'
+        year.withdraw(500)
+        assert year.ending_principal == Dollars(1500), 'considers totals of multiple withdrawals'
+        year.withdraw(3000)
         assert year.ending_principal == Dollars(0), 'never goes below zero'
 
     def test_total_withdrawn_including_capital_gains(self, year):
