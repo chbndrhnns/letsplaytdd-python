@@ -23,7 +23,7 @@ class StockMarketAccount(object):
     def number_of_years(self) -> int:
         return self.ending_year - self.starting_year + 1
 
-    def get_year(self, offset: int) -> StockMarketYear:
+    def get_year_offset(self, offset: int) -> StockMarketYear:
         return self.years[offset]
 
     def _populate_years(self, *, starting_balance, starting_principal, interest_rate, capital_gains_tax_rate):

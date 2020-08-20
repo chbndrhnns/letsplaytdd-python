@@ -14,7 +14,8 @@ COLUMN_TITLES_MAP = {
 
 
 class StockMarketTableModel(sg.Table):
-    headings = [f' {col_name} ' for col_name in COLUMN_TITLES_MAP.values()]
+    headings = [f' {col_name} ' for col_name in
+                COLUMN_TITLES_MAP.values()]  # add space to tweak column width calculations
 
     def __init__(self, account: StockMarketAccount = None):
 
@@ -44,7 +45,7 @@ class StockMarketTableModel(sg.Table):
         return values
 
     def value_at(self, row_idx, col_idx):
-        year = self._account.get_year(row_idx)
+        year = self._account.get_year_offset(row_idx)
 
         if col_idx == 0:
             return year.year

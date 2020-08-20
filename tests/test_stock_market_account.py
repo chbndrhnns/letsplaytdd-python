@@ -26,6 +26,6 @@ class TestStockMarketAccount:
             interest_rate=INTEREST_RATE,
             capital_gains_tax_rate=CAPITAL_GAINS_TAX_RATE
         )
-        assert account.get_year(0).starting_balance == STARTING_BALANCE
-        assert account.get_year(1).starting_balance == Dollars(11000)
-        assert account.get_year(2).starting_balance == Dollars(12100)
+        assert account.get_year_offset(0).starting_balance == STARTING_BALANCE
+        assert account.get_year_offset(1).starting_balance == Dollars(11000)
+        assert account.get_year_offset(2).starting_balance == Dollars(12100)
