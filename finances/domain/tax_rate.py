@@ -11,7 +11,7 @@ class TaxRate(FinanceBase):
         return amount.percentage(self._rate_as_percentage)
 
     def compound_tax_for(self, amount: Dollars) -> Dollars:
-        compound_rate = (100.0 / (100.0 - self._rate_as_percentage))
+        compound_rate = (100.0 / (100.0 - self._rate_as_percentage)) - 1
         return amount.percentage(compound_rate * 100.0)
 
     def __eq__(self, other):
