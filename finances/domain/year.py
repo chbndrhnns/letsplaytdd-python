@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from typing import TypeVar
+from finances.domain.base_class import FinanceBase
 
 
-class Year:
+class Year(FinanceBase):
     """Year model"""
 
     def __init__(self, year: int):

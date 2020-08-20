@@ -1,7 +1,8 @@
+from finances.domain.base_class import FinanceBase
 from finances.domain.dollars import Dollars
 
 
-class InterestRate:
+class InterestRate(FinanceBase):
     def __init__(self, rate_as_percentage):
         self._rate = rate_as_percentage
 

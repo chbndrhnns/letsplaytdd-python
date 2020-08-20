@@ -1,4 +1,7 @@
-class Dollars:
+from finances.domain.base_class import FinanceBase
+
+
+class Dollars(FinanceBase):
     SYMBOL = 'USD'
 
     def __init__(self, amount: int):
@@ -37,6 +40,3 @@ class Dollars:
 
     def __str__(self):
         return f'{self._amount} {self.SYMBOL}'
-
-    def __repr__(self):
-        return self.__str__()

@@ -1,5 +1,6 @@
 from typing import TypeVar
 
+from finances.domain.base_class import FinanceBase
 from finances.domain.dollars import Dollars
 from finances.domain.interest_rate import InterestRate
 from finances.domain.tax_rate import TaxRate
@@ -8,7 +9,7 @@ from finances.domain.year import Year
 StockMarketYearT = TypeVar('StockMarketYearT', bound='StockMarketYear')  # noqa
 
 
-class StockMarketYear:
+class StockMarketYear(FinanceBase):
     def __init__(
             self,
             *,

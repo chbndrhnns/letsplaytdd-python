@@ -1,3 +1,4 @@
+from finances.domain.base_class import FinanceBase
 from finances.domain.dollars import Dollars
 from finances.domain.interest_rate import InterestRate
 from finances.domain.stock_market_year import StockMarketYear
@@ -5,7 +6,7 @@ from finances.domain.tax_rate import TaxRate
 from finances.domain.year import Year
 
 
-class StockMarketAccount(object):
+class StockMarketAccount(FinanceBase):
     def __init__(self, *, starting_year, ending_year, starting_principal: Dollars, starting_balance: Dollars,
                  interest_rate: InterestRate,
                  capital_gains_tax_rate: TaxRate):

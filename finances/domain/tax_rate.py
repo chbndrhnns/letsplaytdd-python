@@ -1,7 +1,8 @@
+from finances.domain.base_class import FinanceBase
 from finances.domain.dollars import Dollars
 
 
-class TaxRate:
+class TaxRate(FinanceBase):
     def __init__(self, rate_as_percentage: float):
         self._rate: float = rate_as_percentage / 100.0
 
@@ -19,6 +20,3 @@ class TaxRate:
 
     def __str__(self):
         return f'{int(self._rate * 100)} %'
-
-    def __repr__(self):
-        return self.__str__()
