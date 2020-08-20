@@ -50,7 +50,7 @@ class StockMarketYear(FinanceBase):
 
     @property
     def appreciation(self) -> Dollars:
-        return Dollars(self.interest_rate.interest_on(self.starting_balance - self.total_withdrawn))
+        return self.interest_rate.interest_on(self.starting_balance - self.total_withdrawn)
 
     @property
     def capital_gains_tax_incurred(self) -> Dollars:

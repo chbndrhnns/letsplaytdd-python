@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from finances.domain.base_class import FinanceBase
 
 
@@ -10,9 +12,6 @@ class Dollars(FinanceBase):
     def subtract_to_zero(self, other):
         if isinstance(other, Dollars):
             return max(Dollars(0), self - other)
-
-    def __int__(self):
-        return self._amount
 
     def __add__(self, other):
         if isinstance(other, Dollars):
@@ -40,3 +39,6 @@ class Dollars(FinanceBase):
 
     def __str__(self):
         return f'{self._amount} {self.SYMBOL}'
+
+    def percentage(self, percent: float) -> Dollars:
+        return Dollars(int(self._amount * percent / 100.0))

@@ -16,6 +16,10 @@ class TestOperations:
     def test_to_int(self):
         assert int(Dollars(10)) == 10
 
+    def test_percentage(self):
+        assert Dollars(20) == Dollars(100).percentage(20)
+        assert Dollars(4) == Dollars(9).percentage(50)
+
 
 class TestDollarValueObject:
     def test_equality(self):

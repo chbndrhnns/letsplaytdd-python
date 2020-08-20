@@ -7,7 +7,7 @@ from finances.domain.tax_rate import TaxRate
 class TestTaxRate:
     @pytest.mark.parametrize(
         'rate, amount, expected', [
-            (0, Dollars(1000), Dollars(0)),
+            (1, Dollars(1000), Dollars(10)),
             (25, Dollars(1000), Dollars(250)),
             # (25, 10, 2.5)
         ]
