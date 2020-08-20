@@ -2,7 +2,7 @@ import pytest
 
 from finances.domain.dollars import Dollars
 from finances.domain.year import Year
-from finances.ui import StockMarketTableModel
+from finances.ui.stock_market_table import StockMarketTableModel
 from finances.domain.interest_rate import InterestRate
 from finances.domain.stock_market_account import StockMarketAccount
 from finances.domain.tax_rate import TaxRate
