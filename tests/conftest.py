@@ -19,17 +19,17 @@ CAPITAL_GAINS_TAX_RATE = TaxRate(25)
 def year_factory(
         *,
         year: YEAR = None,
-        start: Dollars = None,
+        starting_balance: Dollars = None,
         interest_rate: InterestRate = None,
         starting_principal: Dollars = None,
         tax_rate: TaxRate = None):
     year = year or YEAR
-    start = start or STARTING_BALANCE
+    starting_balance = starting_balance or STARTING_BALANCE
     interest_rate = interest_rate or INTEREST_RATE
     tax_rate = tax_rate or CAPITAL_GAINS_TAX_RATE
     starting_principal = starting_principal or STARTING_PRINCIPAL
     return StockMarketYear(
-        starting_balance=start,
+        starting_balance=starting_balance,
         year=year,
         interest_rate=interest_rate,
         starting_principal=starting_principal,

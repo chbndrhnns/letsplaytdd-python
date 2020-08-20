@@ -1,7 +1,10 @@
 import pytest
 
 from finances.domain.dollars import Dollars
+from finances.domain.interest_rate import InterestRate
 from finances.domain.stock_market_year import StockMarketYear
+from finances.domain.tax_rate import TaxRate
+from finances.domain.year import Year
 from tests.conftest import STARTING_BALANCE, INTEREST_RATE, CAPITAL_GAINS_TAX_RATE, year_factory, YEAR, \
     STARTING_PRINCIPAL
 
@@ -22,9 +25,7 @@ class TestStockMarketYear:
     def test_ending_balance(self, year):
         assert year.ending_balance == Dollars(11000), 'ending balance includes interest'
         year.withdraw(Dollars(1000))
-        assert year.ending_balance == Dollars(9900), 'ending balance includes withdrawals'
-        year.withdraw(Dollars(3000))
-        assert year.ending_balance == Dollars(6233), 'ending balance includes capital gains tax withdrawals'
+        assert year.ending_balance == Dollars(9533), 'ending balance includes withdrawals'
 
     def test_next_years_values(self, year):
         next_year = year.next_year()
@@ -44,33 +45,32 @@ class TestStockMarketYear:
 
     def test_total_withdrawn_including_capital_gains(self, year):
         year = year_factory(
-            start=STARTING_BALANCE, interest_rate=INTEREST_RATE, starting_principal=Dollars(0)
+            starting_balance=STARTING_BALANCE, interest_rate=INTEREST_RATE, starting_principal=Dollars(0)
         )
         year.withdraw(Dollars(1000))
         assert year.capital_gains_tax_incurred == Dollars(333)
         assert year.total_withdrawn == Dollars(1333)
 
-    @pytest.mark.skip(reason='wip')
-    def test_capital_gains_tax_is_paid_first(self, year):
+    def test_treat_all_withdrawals_as_subject_to_capital_gains_tax_until_all_sold(self, year):
         capital_gains = STARTING_BALANCE - STARTING_PRINCIPAL
         assert Dollars(7000) == capital_gains
-        year.withdraw(capital_gains)
 
+        year.withdraw(Dollars(500))
         assert Dollars(
-            2333) == year.capital_gains_tax_incurred, 'pay tax on all withdrawals until all capital gains withdrawn'
+            167) == year.capital_gains_tax_incurred, 'pay tax on all withdrawal'
+        year.withdraw(capital_gains)
+        assert Dollars(
+            2333) == year.capital_gains_tax_incurred, 'pay tax on all withdrawal until all capital gains are withdrawn'
         year.withdraw(Dollars(1000))
-        assert Dollars(2333) == year.capital_gains_tax_incurred, 'pay no more tax once all capital gains are withdrawn'
+        assert Dollars(2333) == year.capital_gains_tax_incurred, 'pay no more tax once all capital gains withdrawn'
 
     def test_capital_gains_tax(self, year):
         year.withdraw(Dollars(4000))
-        capital_gains_tax = year.capital_gains_tax_rate.simple_tax_for(Dollars(1000))
-        additional_withdrawals_to_cover_tax = Dollars(83)
-        assert year.capital_gains_tax_incurred == additional_withdrawals_to_cover_tax + capital_gains_tax
-        assert year.total_withdrawn == Dollars(4000) + capital_gains_tax + additional_withdrawals_to_cover_tax
+        assert year.capital_gains_tax_incurred == Dollars(
+            1333), 'tax includes tax on withdrawals to cover capital gains'
+        assert year.total_withdrawn == Dollars(5333), 'includes capital gains tax'
 
     def test_interest_earned(self, year):
         assert year.appreciation == Dollars(1000), 'basic interest earned'
         year.withdraw(Dollars(2000))
-        assert year.appreciation == Dollars(800), 'withdrawals do not earn interest'
-        year.withdraw(Dollars(2000))
-        assert year.appreciation == Dollars(567), 'capital gains taxes do not earn interest'
+        assert year.appreciation == Dollars(733), 'withdrawals do not earn interest'

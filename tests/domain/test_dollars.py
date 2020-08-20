@@ -13,6 +13,18 @@ class TestOperations:
         assert Dollars(10).subtract_to_zero(Dollars(5)) == Dollars(5)
         assert Dollars(10).subtract_to_zero(Dollars(40)) == Dollars(0)
 
+    def test_max_of_two_values(self):
+        val1 = Dollars(1)
+        val2 = Dollars(100)
+
+        assert max(val1, val2) == val2
+
+    def test_min_of_two_values(self):
+        val1 = Dollars(1)
+        val2 = Dollars(100)
+
+        assert min(val1, val2) == val1
+
     def test_percentage(self):
         assert Dollars(20) == Dollars(100).percentage(20)
         assert Dollars(4) == Dollars(9).percentage(50)
