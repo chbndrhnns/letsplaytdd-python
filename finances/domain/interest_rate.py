@@ -1,4 +1,4 @@
-from finances.dollars import Dollars
+from finances.domain.dollars import Dollars
 
 
 class InterestRate:

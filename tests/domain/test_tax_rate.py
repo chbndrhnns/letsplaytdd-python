@@ -1,7 +1,7 @@
 import pytest
 
-from finances.dollars import Dollars
-from finances.tax_rate import TaxRate
+from finances.domain.dollars import Dollars
+from finances.domain.tax_rate import TaxRate
 
 
 class TestTaxRate:

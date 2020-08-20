@@ -1,10 +1,10 @@
 import pytest
 
-from finances.dollars import Dollars
-from finances.gui import StockMarketTableModel
-from finances.interest_rate import InterestRate
-from finances.stock_market_account import StockMarketAccount
-from finances.tax_rate import TaxRate
+from finances.domain.dollars import Dollars
+from finances.ui import StockMarketTableModel
+from finances.domain.interest_rate import InterestRate
+from finances.domain.stock_market_account import StockMarketAccount
+from finances.domain.tax_rate import TaxRate
 
 INTEREST_RATE = InterestRate(10)
 CAPITAL_GAINS_TAX_RATE = TaxRate(25)

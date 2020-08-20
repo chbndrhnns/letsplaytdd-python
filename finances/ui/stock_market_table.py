@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 
-from finances.stock_market_account import StockMarketAccount
+from finances.domain.stock_market_account import StockMarketAccount
 
 COLUMN_TITLES_MAP = {
     0: 'Year',

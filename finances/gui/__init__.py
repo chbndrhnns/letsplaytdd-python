@@ -1,1 +1,0 @@
-from finances.gui.stock_market_table import StockMarketTableModel

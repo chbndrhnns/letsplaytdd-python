@@ -1,7 +1,7 @@
-from finances.dollars import Dollars
-from finances.interest_rate import InterestRate
-from finances.stock_market_year import StockMarketYear
-from finances.tax_rate import TaxRate
+from finances.domain.dollars import Dollars
+from finances.domain.interest_rate import InterestRate
+from finances.domain.stock_market_year import StockMarketYear
+from finances.domain.tax_rate import TaxRate
 
 
 class StockMarketAccount(object):

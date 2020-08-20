@@ -1,7 +1,7 @@
 import pytest
 
-from finances.dollars import Dollars
-from finances.stock_market_year import StockMarketYear
+from finances.domain.dollars import Dollars
+from finances.domain.stock_market_year import StockMarketYear
 from tests.conftest import STARTING_BALANCE, INTEREST_RATE, CAPITAL_GAINS_TAX_RATE, year_factory, YEAR, \
     STARTING_PRINCIPAL
 

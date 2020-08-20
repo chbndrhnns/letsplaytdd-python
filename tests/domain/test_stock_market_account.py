@@ -1,5 +1,5 @@
-from finances.dollars import Dollars
-from finances.stock_market_account import StockMarketAccount
+from finances.domain.dollars import Dollars
+from finances.domain.stock_market_account import StockMarketAccount
 from tests.conftest import STARTING_BALANCE, STARTING_PRINCIPAL, INTEREST_RATE, CAPITAL_GAINS_TAX_RATE
 
 STARTING_YEAR = 2010

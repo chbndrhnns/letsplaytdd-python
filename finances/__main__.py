@@ -1,6 +1,6 @@
 import typer
 
-from finances.stock_market_year import StockMarketYear
+from finances.domain.stock_market_year import StockMarketYear
 
 
 def main():

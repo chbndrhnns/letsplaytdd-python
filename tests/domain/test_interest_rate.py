@@ -1,5 +1,5 @@
-from finances.dollars import Dollars
-from finances.interest_rate import InterestRate
+from finances.domain.dollars import Dollars
+from finances.domain.interest_rate import InterestRate
 
 
 class TestInterestRate:
