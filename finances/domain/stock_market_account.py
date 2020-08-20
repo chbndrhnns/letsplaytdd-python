@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 
 from finances.domain.base_class import FinanceBase
 from finances.domain.dollars import Dollars
