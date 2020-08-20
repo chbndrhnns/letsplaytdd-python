@@ -30,6 +30,5 @@ class TestStockMarketAccount:
         assert account.get_year_offset(1).starting_balance == Dollars(11000)
         assert account.get_year_offset(2).starting_balance == Dollars(12100)
 
-    @pytest.mark.skip(reason='wip')
     def test_no_cumulative_rounding_error_due_to_interest_calculations(self, account):
         assert account.get_year_offset(40).ending_balance == Dollars(497852)

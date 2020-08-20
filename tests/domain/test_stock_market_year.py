@@ -62,4 +62,4 @@ class TestStockMarketYear:
         year.withdraw(2000)
         assert year.appreciation == Dollars(800), 'withdrawals do not earn interest'
         year.withdraw(2000)
-        assert year.appreciation == Dollars(566), 'capital gains taxes do not earn interest'
+        assert year.appreciation == Dollars(567), 'capital gains taxes do not earn interest'

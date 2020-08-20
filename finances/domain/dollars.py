@@ -48,4 +48,4 @@ class Dollars(FinanceBase):
         return f'{self.SYMBOL}{self.rounded_amount:.2f}'
 
     def percentage(self, percent: float) -> Dollars:
-        return Dollars(int(self._amount * percent / 100.0))
+        return Dollars(self._amount * percent / 100.0)
