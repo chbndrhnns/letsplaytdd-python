@@ -25,6 +25,7 @@ class StockMarketAccount(object):
         return self.starting_year.number_of_years_inclusive(self.ending_year)
 
     def get_year_offset(self, offset: int) -> StockMarketYear:
+        assert 0 <= offset < self.number_of_years, f'Offset needs to be between 0 and {self.number_of_years}'
         return self.years[offset]
 
     def _populate_years(self, *, starting_balance, starting_principal, interest_rate, capital_gains_tax_rate):

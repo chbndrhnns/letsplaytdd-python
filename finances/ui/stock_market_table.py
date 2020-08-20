@@ -59,4 +59,5 @@ class StockMarketTableModel(sg.Table):
             return year.appreciation
         if col_idx == 5:
             return year.ending_balance
-        return ""
+
+        assert False, 'Not implemented'
