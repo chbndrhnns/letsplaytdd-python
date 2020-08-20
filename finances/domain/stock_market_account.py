@@ -2,14 +2,15 @@ from finances.domain.dollars import Dollars
 from finances.domain.interest_rate import InterestRate
 from finances.domain.stock_market_year import StockMarketYear
 from finances.domain.tax_rate import TaxRate
+from finances.domain.year import Year
 
 
 class StockMarketAccount(object):
     def __init__(self, *, starting_year, ending_year, starting_principal: Dollars, starting_balance: Dollars,
                  interest_rate: InterestRate,
                  capital_gains_tax_rate: TaxRate):
-        self.starting_year = starting_year
-        self.ending_year = ending_year
+        self.starting_year: Year = starting_year
+        self.ending_year: Year = ending_year
         self.years: StockMarketYear = [None] * self.number_of_years
 
         self._populate_years(
@@ -21,7 +22,7 @@ class StockMarketAccount(object):
 
     @property
     def number_of_years(self) -> int:
-        return self.ending_year - self.starting_year + 1
+        return self.starting_year.number_of_years_inclusive(self.ending_year)
 
     def get_year_offset(self, offset: int) -> StockMarketYear:
         return self.years[offset]

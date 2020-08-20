@@ -22,6 +22,9 @@ class TestYear:
         assert Year(2000) + 5 == Year(2005)
         assert Year(2020) + Year(2030) == 10
 
+    def test_number_of_years_inclusive(self):
+        assert Year(2020).number_of_years_inclusive(Year(2050)) == 31
+
     def test_sub(self):
         assert Year(1998) - 5 == Year(1993)
         assert Year(2002) - Year(1998) == 4

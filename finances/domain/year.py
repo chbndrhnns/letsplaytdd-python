@@ -1,3 +1,8 @@
+from __future__ import annotations
+
+from typing import TypeVar
+
+
 class Year:
     """Year model"""
 
@@ -7,6 +12,12 @@ class Year:
     @property
     def next_year(self):
         return Year(self._year + 1)
+
+    def number_of_years_inclusive(self, ending_year: Year):
+        return int(abs(self._year - ending_year._year) + 1)
+
+    def __int__(self):
+        return self._year
 
     def __add__(self, other):
         if isinstance(other, int):
