@@ -4,7 +4,7 @@ In this repo I am following the lessons at https://www.youtube.com/watch?v=F534z
 
 ## Current playlist index
 
-https://www.youtube.com/watch?v=OmRFC_lD81A&list=PL0CCC6BD6AFF097B1&index=38
+https://www.youtube.com/watch?v=z2z9sSSPHl0&list=PL0CCC6BD6AFF097B1&index=40
 
 ## Setup
 
