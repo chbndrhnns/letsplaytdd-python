@@ -67,6 +67,9 @@ class TestStockMarketYear:
         assert year.ending_principal == expected_principal, \
             'principal is reduced by difference of total withdrawals and capital gains'
 
+        year.withdraw(Dollars(1000))
+        assert year.ending_principal == Dollars(-333), 'principal goes negative if overdrawn'
+
     def test_capital_gains_tax(self, year):
         year.withdraw(Dollars(4000))
         assert year.capital_gains_tax_incurred == Dollars(
