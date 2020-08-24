@@ -2,18 +2,19 @@ import pytest
 
 from finances.domain.dollars import Dollars
 from finances.domain.stock_market_year import StockMarketYear
-from tests.conftest import STARTING_BALANCE, INTEREST_RATE, CAPITAL_GAINS_TAX_RATE, year_factory, YEAR, \
-    STARTING_PRINCIPAL
+from tests.conftest import STARTING_BALANCE, INTEREST_RATE, CAPITAL_GAINS_TAX_RATE, year_factory, YEAR
+
+STARTING_PRINCIPAL = Dollars(3000)
 
 
 class TestStockMarketYear:
 
     @pytest.fixture
     def year(self, default_year) -> StockMarketYear:
-        return default_year()
+        return default_year(starting_principal=STARTING_PRINCIPAL)
 
     def test_starting_values(self, year):
-        assert 10000, year.starting_balance
+        assert year.starting_balance == STARTING_BALANCE
         assert year.interest_rate == INTEREST_RATE
         assert year.starting_principal == STARTING_PRINCIPAL
         assert year.capital_gains_tax_rate == CAPITAL_GAINS_TAX_RATE
@@ -31,14 +32,6 @@ class TestStockMarketYear:
         assert next_year.starting_principal == year.ending_principal
         assert next_year.capital_gains_tax_rate == year.capital_gains_tax_rate
         assert next_year.year == YEAR.next_year
-
-    def test_ending_principal(self, year):
-        year.withdraw(Dollars(1000))
-        assert year.ending_principal == Dollars(2000), 'considers withdrawals'
-        year.withdraw(Dollars(500))
-        assert year.ending_principal == Dollars(1500), 'considers totals of multiple withdrawals'
-        year.withdraw(Dollars(3000))
-        assert year.ending_principal == Dollars(0), 'never goes below zero'
 
     def test_total_withdrawn_including_capital_gains(self, year):
         year = year_factory(
@@ -60,6 +53,19 @@ class TestStockMarketYear:
             2333) == year.capital_gains_tax_incurred, 'pay tax on all withdrawal until all capital gains are withdrawn'
         year.withdraw(Dollars(1000))
         assert Dollars(2333) == year.capital_gains_tax_incurred, 'pay no more tax once all capital gains withdrawn'
+
+    def test_ending_principal(self, year):
+        year.withdraw(Dollars(500))
+        assert year.ending_principal == STARTING_PRINCIPAL, 'withdrawals less then capital gains do not reduce ' \
+                                                            'principal'
+        year.withdraw(Dollars(6500))
+
+        total_withdrawn = Dollars(9333)
+        capital_gains = Dollars(7000)
+        principal_reduced_by = total_withdrawn - capital_gains
+        expected_principal = STARTING_PRINCIPAL - principal_reduced_by
+        assert year.ending_principal == expected_principal, \
+            'principal is reduced by difference of total withdrawals and capital gains'
 
     def test_capital_gains_tax(self, year):
         year.withdraw(Dollars(4000))

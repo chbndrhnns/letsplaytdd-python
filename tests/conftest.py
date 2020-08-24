@@ -10,7 +10,7 @@ from finances.domain.tax_rate import TaxRate
 from finances.domain.year import Year
 
 YEAR = Year(2010)
-STARTING_PRINCIPAL = Dollars(3000)
+STARTING_PRINCIPAL = Dollars(7000)
 STARTING_BALANCE = Dollars(10000)
 INTEREST_RATE = InterestRate(10)
 CAPITAL_GAINS_TAX_RATE = TaxRate(25)
