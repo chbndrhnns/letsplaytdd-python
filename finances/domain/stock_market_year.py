@@ -39,9 +39,12 @@ class StockMarketYear(FinanceBase):
 
     @property
     def ending_principal(self) -> Dollars:
-        capital_gains = self.starting_balance - self.starting_principal
+        capital_gains = self._starting_capital_gains()
         principal_reduced_by = self.total_withdrawn.subtract_to_zero(capital_gains)
         return self.starting_principal - principal_reduced_by
+
+    def _starting_capital_gains(self):
+        return self.starting_balance - self.starting_principal
 
     @property
     def total_withdrawn(self) -> Dollars:
@@ -68,7 +71,7 @@ class StockMarketYear(FinanceBase):
         self.total_withdrawals += amount
 
     def _capital_gains_withdrawn(self) -> Dollars:
-        capital_gains = self.starting_balance - self.starting_principal
+        capital_gains = self._starting_capital_gains()
         return min(
             self.total_withdrawals,
             capital_gains
